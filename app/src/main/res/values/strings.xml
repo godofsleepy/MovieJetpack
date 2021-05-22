@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">MovieJetpack</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="tab_text_1">Film</string>
+    <string name="tab_text_2">Series</string>
+    <string name="tab_text_3">My List</string>
+    <string name="text">Text</string>
+    <string name="top_film">Top Film</string>
+    <string name="discover">Discover</string>
+
 </resources>
