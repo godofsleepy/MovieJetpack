@@ -18,6 +18,7 @@
             android:elevation="0dp"
             android:paddingBottom="8dp"
             app:tabIndicatorHeight="0dp"
+            app:layout_scrollFlags="scroll|enterAlways"
             app:tabMode="auto"
             app:tabSelectedTextColor="?attr/colorSecondary"
             app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
@@ -28,7 +29,7 @@
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
