@@ -1,15 +1,13 @@
 package com.rifat.moviejetpack.utils.adapter
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.annotation.NonNull
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.rifat.moviejetpack.data.entities.MovieEntity
 import com.rifat.moviejetpack.databinding.ItemMovieBinding
-import kotlinx.android.synthetic.main.item_genre.view.*
-import kotlinx.android.synthetic.main.item_movie.view.*
+import com.rifat.moviejetpack.ui.detail.DetailActivity
 import java.util.ArrayList
 
 class ListFIlmAdapter : RecyclerView.Adapter<ListFIlmAdapter.ViewHolder>() {
@@ -32,6 +30,11 @@ class ListFIlmAdapter : RecyclerView.Adapter<ListFIlmAdapter.ViewHolder>() {
                 Glide.with(itemView.context)
                     .load("https://image.tmdb.org/t/p/w500"+ movie.poster_path)
                     .into(imageview)
+                itemView.setOnClickListener {
+                    val intent = Intent(itemView.context, DetailActivity::class.java)
+                    intent.putExtra(DetailActivity.EXTRA_MOVIES, movie)
+                    itemView.context.startActivity(intent)
+                }
             }
 
         }

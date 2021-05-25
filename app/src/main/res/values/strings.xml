@@ -9,5 +9,10 @@
     <string name="text">Text</string>
     <string name="top_film">Top Film</string>
     <string name="discover">Discover</string>
+    <string name="trending">Trending</string>
+    <string name="todo">TODO</string>
+    <string name="_18">18+</string>
+    <string name="action">Action</string>
+    <string name="_4_5">4.5</string>
 
 </resources>
