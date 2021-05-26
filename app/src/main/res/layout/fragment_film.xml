@@ -41,7 +41,7 @@
                 app:autoPlay="false"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView"
-
+                app:showFullScreenButton="false"
                 app:videoId="odM92ap8_c0" />
 
         </androidx.cardview.widget.CardView>

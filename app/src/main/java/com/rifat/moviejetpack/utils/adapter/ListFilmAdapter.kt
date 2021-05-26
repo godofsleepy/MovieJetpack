@@ -10,7 +10,7 @@ import com.rifat.moviejetpack.databinding.ItemMovieBinding
 import com.rifat.moviejetpack.ui.detail.DetailActivity
 import java.util.ArrayList
 
-class ListFIlmAdapter : RecyclerView.Adapter<ListFIlmAdapter.ViewHolder>() {
+class ListFilmAdapter : RecyclerView.Adapter<ListFilmAdapter.ViewHolder>() {
     private val data = ArrayList<MovieEntity>()
 
     fun setData(movies: List<MovieEntity>?) {

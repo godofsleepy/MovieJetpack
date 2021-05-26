@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.rifat.moviejetpack.R
-import com.rifat.moviejetpack.utils.adapter.ListFIlmAdapter
+import com.rifat.moviejetpack.utils.adapter.ListFilmAdapter
 import com.rifat.moviejetpack.utils.adapter.ListGenreAdapter
 import kotlinx.android.synthetic.main.fragment_film.*
 
@@ -30,7 +30,7 @@ class FilmFragment : Fragment() {
             val viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[FilmViewModel::class.java]
             val movies = viewModel.getMovies(context)
 
-            val filmAdapter = ListFIlmAdapter()
+            val filmAdapter = ListFilmAdapter()
             filmAdapter.setData(movies)
 
             list_movie.layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
@@ -45,10 +45,5 @@ class FilmFragment : Fragment() {
             listgenre.setHasFixedSize(false)
             listgenre.adapter = genreAdapter
         }
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
     }
 }
