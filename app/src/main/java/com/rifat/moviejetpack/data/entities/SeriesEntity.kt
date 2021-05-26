@@ -1,6 +1,7 @@
 package com.rifat.moviejetpack.data.entities
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class SeriesEntity(
     @SerializedName("id")
@@ -19,4 +20,4 @@ data class SeriesEntity(
     var vote_average: Double,
     @SerializedName("adult")
     var adult: Boolean = false
-)
+) : Serializable

@@ -1,16 +1,14 @@
-package com.rifat.moviejetpack.ui.detail
+package com.rifat.moviejetpack.ui.detail_film
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
 import androidx.core.view.isGone
 import com.bumptech.glide.Glide
 import com.rifat.moviejetpack.data.entities.MovieEntity
-import com.rifat.moviejetpack.databinding.ActivityDetailBinding
+import com.rifat.moviejetpack.databinding.ActivityDetailFilmBinding
 
 
-class DetailActivity : AppCompatActivity() {
+class DetailFilmActivity : AppCompatActivity() {
 
     companion object {
         const val EXTRA_MOVIES = "extra_movies"
@@ -18,7 +16,7 @@ class DetailActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = ActivityDetailBinding.inflate(layoutInflater)
+        val binding = ActivityDetailFilmBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)

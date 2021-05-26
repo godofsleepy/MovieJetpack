@@ -1,5 +1,6 @@
 package com.rifat.moviejetpack.utils.adapter
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,8 @@ import com.bumptech.glide.Glide
 import com.rifat.moviejetpack.data.entities.MovieEntity
 import com.rifat.moviejetpack.data.entities.SeriesEntity
 import com.rifat.moviejetpack.databinding.ItemMovieBinding
+import com.rifat.moviejetpack.ui.detail_film.DetailFilmActivity
+import com.rifat.moviejetpack.ui.detail_series.DetailSeriesActivity
 import java.util.ArrayList
 
 class ListSeriesAdapter : RecyclerView.Adapter<ListSeriesAdapter.ViewHolder>() {
@@ -28,9 +31,15 @@ class ListSeriesAdapter : RecyclerView.Adapter<ListSeriesAdapter.ViewHolder>() {
             with(binding) {
                 txtRate.text = series.vote_average.toString()
                 txtTitle.text = series.name
-                com.bumptech.glide.Glide.with(itemView.context)
+                Glide.with(itemView.context)
                     .load("https://image.tmdb.org/t/p/w500" + series.poster_path)
                     .into(imageview)
+
+                itemView.setOnClickListener {
+                    val intent = Intent(itemView.context, DetailSeriesActivity::class.java)
+                    intent.putExtra(DetailSeriesActivity.EXTRA_SERIES, series)
+                    itemView.context.startActivity(intent)
+                }
             }
 
         }

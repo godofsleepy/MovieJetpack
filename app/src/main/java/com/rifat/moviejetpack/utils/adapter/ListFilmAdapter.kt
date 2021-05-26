@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.rifat.moviejetpack.data.entities.MovieEntity
 import com.rifat.moviejetpack.databinding.ItemMovieBinding
-import com.rifat.moviejetpack.ui.detail.DetailActivity
+import com.rifat.moviejetpack.ui.detail_film.DetailFilmActivity
 import java.util.ArrayList
 
 class ListFilmAdapter : RecyclerView.Adapter<ListFilmAdapter.ViewHolder>() {
@@ -31,8 +31,8 @@ class ListFilmAdapter : RecyclerView.Adapter<ListFilmAdapter.ViewHolder>() {
                     .load("https://image.tmdb.org/t/p/w500"+ movie.poster_path)
                     .into(imageview)
                 itemView.setOnClickListener {
-                    val intent = Intent(itemView.context, DetailActivity::class.java)
-                    intent.putExtra(DetailActivity.EXTRA_MOVIES, movie)
+                    val intent = Intent(itemView.context, DetailFilmActivity::class.java)
+                    intent.putExtra(DetailFilmActivity.EXTRA_MOVIES, movie)
                     itemView.context.startActivity(intent)
                 }
             }

@@ -11,10 +11,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MovieJetpack">
-        <activity android:name=".ui.detail.DetailActivity" android:parentActivityName=".ui.home.HomeActivity">
-             <meta-data
-             android:name="android.support.PARENT_ACTIVITY"
-             android:value=".ui.home.HomeActivity" />
+        <activity android:name=".ui.detail_series.DetailSeriesActivity"></activity>
+        <activity
+            android:name=".ui.detail_film.DetailFilmActivity"
+            android:parentActivityName=".ui.home.HomeActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.home.HomeActivity" />
         </activity>
         <activity android:name=".ui.home.HomeActivity">
             <intent-filter>
@@ -22,7 +25,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
     </application>
 
