@@ -17,6 +17,8 @@ class DetailSeriesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val binding = ActivityDetailSeriesBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setSupportActionBar(binding.toolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
 
         val extras = intent.extras
         if (extras != null) {
@@ -27,7 +29,7 @@ class DetailSeriesActivity : AppCompatActivity() {
             binding.txtRate.text = series.vote_average.toString()
             binding.cardAdult.isGone = !series.adult
             Glide.with(applicationContext)
-                .load("https://image.tmdb.org/t/p/w500"+ series.poster_path)
+                .load("https://image.tmdb.org/t/p/w500"+ series.backdrop_path)
                 .into(binding.detailImage)
         }
     }

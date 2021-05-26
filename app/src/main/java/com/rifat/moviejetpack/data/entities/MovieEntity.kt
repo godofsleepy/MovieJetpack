@@ -14,6 +14,8 @@ data class MovieEntity(
     var original_language: String,
     @SerializedName("poster_path")
     var poster_path: String,
+    @SerializedName("backdrop_path")
+    var backdrop_path: String,
     @SerializedName("release_date")
     var release_date: String,
     @SerializedName("vote_average")

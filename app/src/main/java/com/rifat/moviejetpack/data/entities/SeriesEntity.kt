@@ -14,6 +14,8 @@ data class SeriesEntity(
     var original_language: String,
     @SerializedName("poster_path")
     var poster_path: String,
+    @SerializedName("backdrop_path")
+    var backdrop_path: String,
     @SerializedName("first_air_date")
     var first_air_date: String,
     @SerializedName("vote_average")

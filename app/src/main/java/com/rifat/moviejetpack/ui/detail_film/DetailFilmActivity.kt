@@ -31,7 +31,7 @@ class DetailFilmActivity : AppCompatActivity() {
             binding.txtRate.text = movie.vote_average.toString()
             binding.cardAdult.isGone = !movie.adult
             Glide.with(applicationContext)
-                .load("https://image.tmdb.org/t/p/w500"+ movie.poster_path)
+                .load("https://image.tmdb.org/t/p/w500"+ movie.backdrop_path)
                 .into(binding.detailImage)
         }
     }
