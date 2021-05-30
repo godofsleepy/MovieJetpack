@@ -42,6 +42,12 @@ class HomeActivityTest {
             .check(ViewAssertions.matches(withText("Mortal Kombat")))
         Espresso.onView(withId(R.id.txt_date))
             .check(ViewAssertions.matches(withText("2021-04-07")))
+        Espresso.onView(withId(R.id.detail_image))
+            .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
+        Espresso.onView(withId(R.id.txt_rate))
+            .check(ViewAssertions.matches(withText("7.6")))
+        Espresso.onView(withId(R.id.txt_desc))
+            .check(ViewAssertions.matches(withText("Washed-up MMA fighter Cole Young, unaware of his heritage, and hunted by Emperor Shang Tsung's best warrior, Sub-Zero, seeks out and trains with Earth's greatest champions as he prepares to stand against the enemies of Outworld in a high stakes battle for the universe.")))
     }
 
     @Test
@@ -72,5 +78,11 @@ class HomeActivityTest {
             .check(ViewAssertions.matches(withText("Who Killed Sara?")))
         Espresso.onView(withId(R.id.txt_date))
             .check(ViewAssertions.matches(withText("2021-03-24")))
+        Espresso.onView(withId(R.id.detail_image))
+            .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
+        Espresso.onView(withId(R.id.txt_rate))
+            .check(ViewAssertions.matches(withText("7.8")))
+        Espresso.onView(withId(R.id.txt_desc))
+            .check(ViewAssertions.matches(withText("Hell-bent on exacting revenge and proving he was framed for his sister's murder, Álex sets out to unearth much more than the crime's real culprit.")))
     }
 }
