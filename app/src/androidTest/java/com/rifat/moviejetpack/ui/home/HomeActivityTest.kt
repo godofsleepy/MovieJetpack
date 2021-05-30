@@ -40,6 +40,8 @@ class HomeActivityTest {
             .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
         Espresso.onView(withId(R.id.txt_title))
             .check(ViewAssertions.matches(withText("Mortal Kombat")))
+        Espresso.onView(withId(R.id.txt_date))
+            .check(ViewAssertions.matches(withText("2021-04-07")))
     }
 
     @Test
@@ -68,5 +70,7 @@ class HomeActivityTest {
             .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
         Espresso.onView(withId(R.id.txt_title))
             .check(ViewAssertions.matches(withText("Who Killed Sara?")))
+        Espresso.onView(withId(R.id.txt_date))
+            .check(ViewAssertions.matches(withText("2021-03-24")))
     }
 }

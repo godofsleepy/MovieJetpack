@@ -11,8 +11,8 @@ class SeriesViewModel : ViewModel() {
         val gson = Gson()
         val listMovie = object : TypeToken<List<SeriesEntity>>() {}.type
 
-        val movies: List<SeriesEntity> = gson.fromJson(data, listMovie)
-        return movies
+        val series: List<SeriesEntity> = gson.fromJson(data, listMovie)
+        return series
     }
 
 }

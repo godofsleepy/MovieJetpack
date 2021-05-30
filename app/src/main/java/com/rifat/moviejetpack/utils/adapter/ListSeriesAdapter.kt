@@ -37,7 +37,7 @@ class ListSeriesAdapter : RecyclerView.Adapter<ListSeriesAdapter.ViewHolder>() {
 
                 itemView.setOnClickListener {
                     val intent = Intent(itemView.context, DetailSeriesActivity::class.java)
-                    intent.putExtra(DetailSeriesActivity.EXTRA_SERIES, series)
+                    intent.putExtra(DetailSeriesActivity.EXTRA_SERIES, series.id)
                     itemView.context.startActivity(intent)
                 }
             }
