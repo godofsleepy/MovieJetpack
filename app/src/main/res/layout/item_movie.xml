@@ -19,10 +19,10 @@
         <ImageView
             android:id="@+id/imageview"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="wrap_content"
             android:adjustViewBounds="true"
             android:contentDescription="@string/todo"
-            android:scaleType="centerCrop" />
+            android:scaleType="fitXY" />
 
     </androidx.cardview.widget.CardView>
 

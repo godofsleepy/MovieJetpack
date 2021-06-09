@@ -12,6 +12,7 @@ import com.rifat.moviejetpack.R
 import com.rifat.moviejetpack.utils.adapter.ListFilmAdapter
 import com.rifat.moviejetpack.utils.adapter.ListGenreAdapter
 import com.rifat.moviejetpack.utils.getJsonDataFromAsset
+import com.rifat.moviejetpack.utils.viewmodel.ViewModelFactory
 import kotlinx.android.synthetic.main.fragment_film.*
 
 
@@ -28,22 +29,37 @@ class FilmFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (activity != null) {
-            val viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[FilmViewModel::class.java]
-            val movies = viewModel.getMovies(getJsonDataFromAsset(activity!!.applicationContext, "movies.json"))
+            val factory = ViewModelFactory.getInstance()
+            val viewModel = ViewModelProvider(this, factory)[FilmViewModel::class.java]
             val filmAdapter = ListFilmAdapter()
-            filmAdapter.setData(movies)
-
-            list_movie.layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
-            list_movie.setHasFixedSize(false)
-            list_movie.adapter = filmAdapter
-
-
             val genreAdapter = ListGenreAdapter()
-            genreAdapter.setData(listOf("All", "Horror", "Drama", "Adventure", "Romance"))
 
-            listgenre.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            listgenre.setHasFixedSize(false)
-            listgenre.adapter = genreAdapter
+            viewModel.getMovies().observe(this, { movies ->
+                progressBar.visibility = View.GONE
+                filmAdapter.setData(movies)
+                filmAdapter.notifyDataSetChanged()
+            })
+
+            with(list_movie) {
+                list_movie.layoutManager =
+                    StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
+                list_movie.setHasFixedSize(false)
+                list_movie.adapter = filmAdapter
+            }
+
+            viewModel.getGenres().observe(this, {genres ->
+                progressBar2.visibility = View.GONE
+                genreAdapter.setData(genres)
+                genreAdapter.notifyDataSetChanged()
+            })
+
+            with(listgenre) {
+                listgenre.layoutManager =
+                    LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                listgenre.setHasFixedSize(false)
+                listgenre.adapter = genreAdapter
+            }
+
         }
     }
 }

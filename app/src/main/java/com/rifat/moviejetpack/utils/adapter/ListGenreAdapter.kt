@@ -6,14 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.rifat.moviejetpack.R
+import com.rifat.moviejetpack.data.entities.GenreEntity
 import kotlinx.android.synthetic.main.item_genre.view.*
 import java.util.ArrayList
 
 class ListGenreAdapter : RecyclerView.Adapter<ListGenreAdapter.ViewHolder>() {
 
-    private val data = ArrayList<String>()
+    private val data = ArrayList<GenreEntity>()
 
-    fun setData(data: List<String>?) {
+    fun setData(data: List<GenreEntity>?) {
         if (data == null) return
         this.data.clear()
         this.data.addAll(data)
@@ -40,8 +41,8 @@ class ListGenreAdapter : RecyclerView.Adapter<ListGenreAdapter.ViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val text = data[position]
-        holder.bind(text, position)
+        val genre = data[position]
+        holder.bind(genre.name, position)
     }
 
     override fun getItemCount(): Int = data.size

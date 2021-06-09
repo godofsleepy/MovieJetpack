@@ -1,16 +1,13 @@
 package com.rifat.moviejetpack.ui.home.film
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
+import com.rifat.moviejetpack.data.MovieRepository
+import com.rifat.moviejetpack.data.entities.GenreEntity
 import com.rifat.moviejetpack.data.entities.MovieEntity
 
-class FilmViewModel : ViewModel() {
-    fun getMovies(data: String?): List<MovieEntity> {
-        val gson = Gson()
-        val listMovie = object : TypeToken<List<MovieEntity>>() {}.type
+class FilmViewModel(private val movieRepository: MovieRepository) : ViewModel() {
 
-        val movies: List<MovieEntity> = gson.fromJson(data, listMovie)
-        return movies
-    }
+    fun getMovies() : LiveData<List<MovieEntity>> = movieRepository.getListMovie()
+    fun getGenres() : LiveData<List<GenreEntity>> = movieRepository.getMovieGenre()
 }

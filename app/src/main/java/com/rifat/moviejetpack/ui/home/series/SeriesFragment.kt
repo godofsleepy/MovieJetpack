@@ -39,12 +39,12 @@ class SeriesFragment : Fragment() {
             list_series.adapter = seriesAdapter
 
 
-            val genreAdapter = ListGenreAdapter()
-            genreAdapter.setData(listOf("All", "Horror", "Drama", "Adventure", "Romance"))
-
-            listgenre.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            listgenre.setHasFixedSize(false)
-            listgenre.adapter = genreAdapter
+//            val genreAdapter = ListGenreAdapter()
+//            genreAdapter.setData(listOf("All", "Horror", "Drama", "Adventure", "Romance"))
+//
+//            listgenre.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+//            listgenre.setHasFixedSize(false)
+//            listgenre.adapter = genreAdapter
         }
     }
 }

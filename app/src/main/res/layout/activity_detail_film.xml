@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:fitsSystemWindows="true"
     android:layout_height="match_parent"
     tools:context=".ui.detail_film.DetailFilmActivity">
 
@@ -11,7 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="280dp"
         android:animateLayoutChanges="true"
-        android:background="?attr/colorSurface"
         android:fitsSystemWindows="true"
         android:stateListAnimator="@animator/show_toolbar"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
@@ -21,11 +21,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
-            app:collapsedTitleGravity="center"
-            app:collapsedTitleTextAppearance="@style/TextAppearance.AppCompat"
             app:contentScrim="?attr/colorSurface"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            app:statusBarScrim="?attr/colorSurface"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
             app:titleEnabled="false"
             app:toolbarId="@id/toolbar">
 
@@ -46,7 +43,7 @@
                 app:contentInsetStartWithNavigation="0dp"
                 app:layout_collapseMode="pin"
                 app:navigationIcon="@drawable/ic_baseline_arrow_back_24"
-                app:titleTextColor="?attr/colorOnSurface" />
+                app:popupTheme="@style/ThemeOverlay.MaterialComponents.Light" />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
@@ -115,11 +112,11 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
+                    android:id="@+id/txt_rate"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_margin="4dp"
                     android:layout_marginStart="48dp"
-                    android:id="@+id/txt_rate"
                     android:layout_marginTop="12dp"
                     android:text="@string/_4_5"
                     app:drawableLeftCompat="@drawable/ic_baseline_star_24" />
@@ -131,11 +128,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="@string/text"
                 android:layout_marginEnd="8dp"
-                app:layout_constrainedWidth="true"
+                android:text="@string/text"
                 android:textSize="24sp"
                 android:textStyle="bold"
+                app:layout_constrainedWidth="true"
                 app:layout_constraintEnd_toStartOf="@+id/txt_date"
                 app:layout_constraintHorizontal_bias="0.05"
                 app:layout_constraintStart_toStartOf="parent"
