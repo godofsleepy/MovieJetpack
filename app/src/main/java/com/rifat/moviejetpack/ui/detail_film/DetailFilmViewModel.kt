@@ -2,11 +2,8 @@ package com.rifat.moviejetpack.ui.detail_film
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.rifat.moviejetpack.data.MovieRepository
 import com.rifat.moviejetpack.data.entities.DetailMovieEntity
-import com.rifat.moviejetpack.data.entities.MovieEntity
 
 class DetailFilmViewModel(private val movieRepository: MovieRepository) : ViewModel() {
 
