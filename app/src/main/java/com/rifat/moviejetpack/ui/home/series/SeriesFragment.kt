@@ -9,9 +9,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.rifat.moviejetpack.R
+import com.rifat.moviejetpack.ui.home.film.FilmViewModel
 import com.rifat.moviejetpack.utils.adapter.ListGenreAdapter
 import com.rifat.moviejetpack.utils.adapter.ListSeriesAdapter
 import com.rifat.moviejetpack.utils.getJsonDataFromAsset
+import com.rifat.moviejetpack.utils.viewmodel.ViewModelFactory
 import kotlinx.android.synthetic.main.fragment_series.*
 
 class SeriesFragment : Fragment() {
@@ -28,23 +30,36 @@ class SeriesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (activity != null) {
-            val viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[SeriesViewModel::class.java]
-            val series = viewModel.getSeries(getJsonDataFromAsset(activity!!.applicationContext, "series.json"))
-
+            val factory = ViewModelFactory.getInstance()
+            val viewModel = ViewModelProvider(this, factory)[SeriesViewModel::class.java]
             val seriesAdapter = ListSeriesAdapter()
-            seriesAdapter.setData(series)
+            val genreAdapter = ListGenreAdapter()
 
-            list_series.layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
-            list_series.setHasFixedSize(false)
-            list_series.adapter = seriesAdapter
+            viewModel.getSeries().observe(this, { series ->
+                progressBar3.visibility = View.GONE
+                seriesAdapter.setData(series)
+                seriesAdapter.notifyDataSetChanged()
+            })
+            with(list_series) {
+                list_series.layoutManager =
+                    StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
+                list_series.setHasFixedSize(false)
+                list_series.adapter = seriesAdapter
+            }
+
+            viewModel.getGenres().observe(this, { genres ->
+                progressBar4.visibility = View.GONE
+                genreAdapter.setData(genres)
+                genreAdapter.notifyDataSetChanged()
+            })
+            with(listgenre) {
+                listgenre.layoutManager =
+                    LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                listgenre.setHasFixedSize(false)
+                listgenre.adapter = genreAdapter
+            }
 
 
-//            val genreAdapter = ListGenreAdapter()
-//            genreAdapter.setData(listOf("All", "Horror", "Drama", "Adventure", "Romance"))
-//
-//            listgenre.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-//            listgenre.setHasFixedSize(false)
-//            listgenre.adapter = genreAdapter
         }
     }
 }

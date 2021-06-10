@@ -2,11 +2,14 @@ package com.rifat.moviejetpack.ui.detail_series
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.core.view.isGone
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.rifat.moviejetpack.databinding.ActivityDetailSeriesBinding
+import com.rifat.moviejetpack.ui.detail_film.DetailFilmViewModel
 import com.rifat.moviejetpack.utils.getJsonDataFromAsset
+import com.rifat.moviejetpack.utils.viewmodel.ViewModelFactory
 
 class DetailSeriesActivity : AppCompatActivity() {
 
@@ -20,20 +23,24 @@ class DetailSeriesActivity : AppCompatActivity() {
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
-        val viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[DetailSeriesViewModel::class.java]
+        val factory = ViewModelFactory.getInstance()
+        val viewModel = ViewModelProvider(this, factory)[DetailSeriesViewModel::class.java]
 
         val extras = intent.extras
         if (extras != null) {
-            val seriesId = extras.getInt(EXTRA_SERIES)
-            val series = viewModel.getDetailSeries(seriesId, getJsonDataFromAsset(applicationContext.applicationContext, "series.json"))
-            binding.txtTitle.text = series.name
-            binding.txtDate.text = series.first_air_date
-            binding.txtDesc.text = series.overview
-            binding.txtRate.text = series.vote_average.toString()
-            binding.cardAdult.isGone = !series.adult
-            Glide.with(applicationContext)
-                .load("https://image.tmdb.org/t/p/w500"+ series.backdrop_path)
-                .into(binding.detailImage)
+            val seriesId: Int = extras.getInt(EXTRA_SERIES)
+            viewModel.getDetailSeries(seriesId).observe(this, { series ->
+                binding.progressBar.visibility = View.GONE
+                binding.txtTitle.text = series.name
+                binding.txtDate.text = series.first_air_date
+                binding.txtDesc.text = series.overview
+                binding.txtRate.text = series.vote_average.toString()
+                binding.cardAdult.isGone = !series.adult
+                Glide.with(applicationContext)
+                    .load("https://image.tmdb.org/t/p/w500" + series.backdrop_path)
+                    .into(binding.detailImage)
+            })
+
         }
     }
 }

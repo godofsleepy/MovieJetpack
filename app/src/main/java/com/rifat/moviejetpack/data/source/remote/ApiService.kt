@@ -12,17 +12,22 @@ interface ApiService {
     fun getListMovie(@Query("api_key") key: String): Call<MovieResponse>
 
     @GET("tv/popular")
-    fun getListSeries(@Query("page") page: String): Call<MovieEntity>
+    fun getListSeries(@Query("api_key") key: String): Call<SeriesResponse>
 
     @GET("movie/{id}")
-    fun getDetailMovie(@Path("id") id: String): Call<MovieEntity>
+    fun getDetailMovie(
+        @Path("id") id: String,
+        @Query("api_key") key: String
+    ): Call<DetailMovieEntity>
 
     @GET("tv/{id}")
-    fun getDetailSeries(@Path("id") id: String): Call<SeriesEntity>
+    fun getDetailSeries(
+        @Path("id") id: String, @Query("api_key") key: String
+    ): Call<DetailSeriesEntity>
 
     @GET("genre/movie/list")
     fun getGenreMovie(@Query("api_key") key: String): Call<GenreResponse>
 
     @GET("genre/tv/list")
-    fun getGenreSeries(): Call<GenreResponse>
+    fun getGenreSeries(@Query("api_key") key: String): Call<GenreResponse>
 }

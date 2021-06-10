@@ -2,6 +2,7 @@ package com.rifat.moviejetpack.data
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.rifat.moviejetpack.data.entities.DetailMovieEntity
 import com.rifat.moviejetpack.data.entities.GenreEntity
 import com.rifat.moviejetpack.data.entities.MovieEntity
 import com.rifat.moviejetpack.data.source.remote.RemoteDataSource
@@ -12,7 +13,7 @@ import kotlinx.coroutines.launch
 interface MovieDataSource {
     fun getListMovie(): LiveData<List<MovieEntity>>
 
-//    fun getDetailMovie(id: String): LiveData<List<CourseEntity>>
+    fun getDetailMovie(id: String): LiveData<DetailMovieEntity>
 
     fun getMovieGenre(): LiveData<List<GenreEntity>>
 }
@@ -43,10 +44,22 @@ class MovieRepository private constructor(private val remoteDataSource: RemoteDa
         return movieResult
     }
 
+    override fun getDetailMovie(id: String): LiveData<DetailMovieEntity> {
+        val detailMovieResult = MutableLiveData<DetailMovieEntity>()
+        CoroutineScope(Dispatchers.IO).launch {
+            remoteDataSource.getDetailMovie(id, object : RemoteDataSource.LoadDetailMovieCallback {
+                override fun onDetailMovieReceived(detailMovieEntity: DetailMovieEntity) {
+                    detailMovieResult.postValue(detailMovieEntity)
+                }
+            })
+        }
+        return detailMovieResult
+    }
+
     override fun getMovieGenre(): LiveData<List<GenreEntity>> {
         val genreResult = MutableLiveData<List<GenreEntity>>()
         CoroutineScope(Dispatchers.IO).launch {
-            remoteDataSource.getMovieGenre(object : RemoteDataSource.LoadGenresCallback{
+            remoteDataSource.getMovieGenre(object : RemoteDataSource.LoadGenresCallback {
                 override fun onGenresReceived(genresReponse: List<GenreEntity>) {
                     genreResult.postValue(genresReponse)
                 }

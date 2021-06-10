@@ -1,8 +1,7 @@
 package com.rifat.moviejetpack.data.source.remote
 
 import com.rifat.moviejetpack.BuildConfig
-import com.rifat.moviejetpack.data.entities.GenreEntity
-import com.rifat.moviejetpack.data.entities.MovieEntity
+import com.rifat.moviejetpack.data.entities.*
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -47,12 +46,49 @@ class RemoteDataSource {
         }
     }
 
+    suspend fun getDetailMovie(id: String ,callback:LoadDetailMovieCallback) {
+        getApiService().getDetailMovie( id, BuildConfig.MOVIEDB_ACCESS_KEY).await().let {
+            callback.onDetailMovieReceived(it)
+        }
+    }
+
+
+    suspend fun getListSeries(callback: LoadListSeriesCallback) {
+        getApiService().getListSeries(BuildConfig.MOVIEDB_ACCESS_KEY).await().results?.let {
+            callback.onListSeriesReceived(it)
+        }
+    }
+
+    suspend fun getSeriesGenre(callback:LoadGenresCallback ) {
+        getApiService().getGenreSeries(BuildConfig.MOVIEDB_ACCESS_KEY).await().genres?.let {
+            callback.onGenresReceived(it)
+        }
+    }
+
+    suspend fun getDetailSeries(id: String ,callback:LoadDetailSeriesCallback) {
+        getApiService().getDetailSeries( id, BuildConfig.MOVIEDB_ACCESS_KEY).await().let {
+            callback.onDetailSeriesReceived(it)
+        }
+    }
+
     interface LoadListMovieCallback {
         fun onListMovieReceived(movieResponses: List<MovieEntity>)
     }
 
     interface LoadGenresCallback {
         fun onGenresReceived(genresReponse : List<GenreEntity>)
+    }
+
+    interface  LoadDetailMovieCallback {
+        fun onDetailMovieReceived(detailMovieEntity: DetailMovieEntity)
+    }
+
+    interface LoadListSeriesCallback {
+        fun onListSeriesReceived(seriesResponse: List<SeriesEntity>)
+    }
+
+    interface  LoadDetailSeriesCallback {
+        fun onDetailSeriesReceived(detailMovieEntity: DetailSeriesEntity)
     }
 
 }

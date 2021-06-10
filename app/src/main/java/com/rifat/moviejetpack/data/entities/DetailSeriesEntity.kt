@@ -2,11 +2,11 @@ package com.rifat.moviejetpack.data.entities
 
 import com.google.gson.annotations.SerializedName
 
-data class DetailMovieEntity(
+data class DetailSeriesEntity(
     @SerializedName("id")
     var id: Int,
-    @SerializedName("title")
-    var title: String,
+    @SerializedName("name")
+    var name: String,
     @SerializedName("overview")
     var overview: String,
     @SerializedName("original_language")
@@ -15,8 +15,8 @@ data class DetailMovieEntity(
     var poster_path: String,
     @SerializedName("backdrop_path")
     var backdrop_path: String,
-    @SerializedName("release_date")
-    var release_date: String,
+    @SerializedName("first_air_date")
+    var first_air_date: String,
     @SerializedName("vote_average")
     var vote_average: Double,
     @SerializedName("adult")
