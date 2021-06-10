@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.rifat.moviejetpack.R
 import com.rifat.moviejetpack.utils.adapter.ListFilmAdapter
 import com.rifat.moviejetpack.utils.adapter.ListGenreAdapter
-import com.rifat.moviejetpack.utils.getJsonDataFromAsset
 import com.rifat.moviejetpack.utils.viewmodel.ViewModelFactory
 import kotlinx.android.synthetic.main.fragment_film.*
 

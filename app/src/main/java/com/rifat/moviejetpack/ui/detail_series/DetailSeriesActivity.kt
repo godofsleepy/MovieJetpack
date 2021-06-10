@@ -7,8 +7,6 @@ import androidx.core.view.isGone
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.rifat.moviejetpack.databinding.ActivityDetailSeriesBinding
-import com.rifat.moviejetpack.ui.detail_film.DetailFilmViewModel
-import com.rifat.moviejetpack.utils.getJsonDataFromAsset
 import com.rifat.moviejetpack.utils.viewmodel.ViewModelFactory
 
 class DetailSeriesActivity : AppCompatActivity() {

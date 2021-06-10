@@ -57,7 +57,7 @@ class SeriesRepository private constructor(private val remoteDataSource: RemoteD
     override fun getSeriesGenre(): LiveData<List<GenreEntity>> {
         val genreResult = MutableLiveData<List<GenreEntity>>()
         CoroutineScope(Dispatchers.IO).launch {
-            remoteDataSource.getMovieGenre(object : RemoteDataSource.LoadGenresCallback {
+            remoteDataSource.getSeriesGenre(object : RemoteDataSource.LoadGenresCallback {
                 override fun onGenresReceived(genresReponse: List<GenreEntity>) {
                     genreResult.postValue(genresReponse)
                 }

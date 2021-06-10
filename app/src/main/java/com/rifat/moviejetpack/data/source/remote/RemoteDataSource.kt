@@ -2,6 +2,7 @@ package com.rifat.moviejetpack.data.source.remote
 
 import com.rifat.moviejetpack.BuildConfig
 import com.rifat.moviejetpack.data.entities.*
+import com.rifat.moviejetpack.utils.EspressoIdlingResource
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -35,39 +36,52 @@ class RemoteDataSource {
     }
 
     suspend fun getListMovie(callback: LoadListMovieCallback) {
+        EspressoIdlingResource.increment()
         getApiService().getListMovie(BuildConfig.MOVIEDB_ACCESS_KEY).await().results?.let {
             callback.onListMovieReceived(it)
+            EspressoIdlingResource.decrement()
         }
+
     }
 
     suspend fun getMovieGenre(callback:LoadGenresCallback ) {
+        EspressoIdlingResource.increment()
         getApiService().getGenreMovie(BuildConfig.MOVIEDB_ACCESS_KEY).await().genres?.let {
             callback.onGenresReceived(it)
+            EspressoIdlingResource.decrement()
         }
     }
 
     suspend fun getDetailMovie(id: String ,callback:LoadDetailMovieCallback) {
+        EspressoIdlingResource.increment()
         getApiService().getDetailMovie( id, BuildConfig.MOVIEDB_ACCESS_KEY).await().let {
             callback.onDetailMovieReceived(it)
+            EspressoIdlingResource.decrement()
         }
     }
 
 
     suspend fun getListSeries(callback: LoadListSeriesCallback) {
+        EspressoIdlingResource.increment()
         getApiService().getListSeries(BuildConfig.MOVIEDB_ACCESS_KEY).await().results?.let {
             callback.onListSeriesReceived(it)
+            EspressoIdlingResource.decrement()
         }
     }
 
     suspend fun getSeriesGenre(callback:LoadGenresCallback ) {
+        EspressoIdlingResource.increment()
         getApiService().getGenreSeries(BuildConfig.MOVIEDB_ACCESS_KEY).await().genres?.let {
             callback.onGenresReceived(it)
+            EspressoIdlingResource.decrement()
         }
     }
 
     suspend fun getDetailSeries(id: String ,callback:LoadDetailSeriesCallback) {
+        EspressoIdlingResource.increment()
         getApiService().getDetailSeries( id, BuildConfig.MOVIEDB_ACCESS_KEY).await().let {
             callback.onDetailSeriesReceived(it)
+            EspressoIdlingResource.decrement()
         }
     }
 

@@ -1,21 +1,34 @@
 package com.rifat.moviejetpack.ui.home
 
 import androidx.recyclerview.widget.RecyclerView
+import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso
+import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
-import androidx.test.ext.junit.rules.ActivityScenarioRule
 import com.rifat.moviejetpack.R
-import org.junit.Rule
+import com.rifat.moviejetpack.utils.EspressoIdlingResource
+import org.junit.After
+import org.junit.Before
 import org.junit.Test
 
 class HomeActivityTest {
-    @get:Rule
-    var activityRule = ActivityScenarioRule(HomeActivity::class.java)
+
+    @Before
+    fun setUp() {
+        ActivityScenario.launch(HomeActivity::class.java)
+        IdlingRegistry.getInstance().register(EspressoIdlingResource.idlingResource)
+    }
+
+    @After
+    fun tearDown() {
+        IdlingRegistry.getInstance().unregister(EspressoIdlingResource.idlingResource)
+    }
+
 
     @Test
     fun loadFilm() {
@@ -27,7 +40,8 @@ class HomeActivityTest {
 
     @Test
     fun loadVideoFilm() {
-        Espresso.onView(withId(R.id.youtube_player_view1)).check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
+        Espresso.onView(withId(R.id.youtube_player_view1))
+            .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
         Espresso.onView(withId(R.id.youtube_player_view1))
             .perform(click())
     }
@@ -35,7 +49,12 @@ class HomeActivityTest {
     @Test
     fun loadDetailFilm() {
         Espresso.onView(withId(R.id.list_movie))
-            .perform(RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(0, click()))
+            .perform(
+                RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                    0,
+                    click()
+                )
+            )
         Espresso.onView(withId(R.id.txt_title))
             .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
         Espresso.onView(withId(R.id.txt_title))
@@ -62,7 +81,8 @@ class HomeActivityTest {
     @Test
     fun loadVideoSeries() {
         Espresso.onView(withText("Series")).perform(click())
-        Espresso.onView(withId(R.id.youtube_player_view)).check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
+        Espresso.onView(withId(R.id.youtube_player_view))
+            .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
         Espresso.onView(withId(R.id.youtube_player_view))
             .perform(click())
     }
@@ -71,7 +91,12 @@ class HomeActivityTest {
     fun loadDetailSeries() {
         Espresso.onView(withText("Series")).perform(click())
         Espresso.onView(withId(R.id.list_series))
-            .perform(RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(0, click()))
+            .perform(
+                RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                    0,
+                    click()
+                )
+            )
         Espresso.onView(withId(R.id.txt_title))
             .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
         Espresso.onView(withId(R.id.txt_title))

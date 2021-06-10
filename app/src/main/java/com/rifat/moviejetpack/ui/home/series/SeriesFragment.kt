@@ -9,10 +9,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.rifat.moviejetpack.R
-import com.rifat.moviejetpack.ui.home.film.FilmViewModel
 import com.rifat.moviejetpack.utils.adapter.ListGenreAdapter
 import com.rifat.moviejetpack.utils.adapter.ListSeriesAdapter
-import com.rifat.moviejetpack.utils.getJsonDataFromAsset
 import com.rifat.moviejetpack.utils.viewmodel.ViewModelFactory
 import kotlinx.android.synthetic.main.fragment_series.*
 
