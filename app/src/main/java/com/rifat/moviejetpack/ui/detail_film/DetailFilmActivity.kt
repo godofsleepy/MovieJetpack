@@ -6,10 +6,7 @@ import android.view.View
 import androidx.core.view.isGone
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
-import com.rifat.moviejetpack.data.entities.MovieEntity
 import com.rifat.moviejetpack.databinding.ActivityDetailFilmBinding
-import com.rifat.moviejetpack.ui.home.film.FilmViewModel
-import com.rifat.moviejetpack.utils.getJsonDataFromAsset
 import com.rifat.moviejetpack.utils.viewmodel.ViewModelFactory
 
 

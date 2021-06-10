@@ -2,7 +2,6 @@ package com.rifat.moviejetpack.data.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.rifat.moviejetpack.data.MovieRepository
 import com.rifat.moviejetpack.data.entities.*
 import com.rifat.moviejetpack.data.source.remote.RemoteDataSource
 import kotlinx.coroutines.CoroutineScope
