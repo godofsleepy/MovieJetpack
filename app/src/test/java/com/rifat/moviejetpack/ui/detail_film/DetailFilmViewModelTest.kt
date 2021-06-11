@@ -6,9 +6,9 @@ import androidx.lifecycle.Observer
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.nhaarman.mockitokotlin2.verify
+import com.rifat.moviejetpack.data.FakeMovieRepository
 import com.rifat.moviejetpack.data.MovieRepository
 import com.rifat.moviejetpack.data.entities.DetailMovieEntity
-import com.rifat.moviejetpack.data.entities.MovieEntity
 import org.junit.Assert
 import org.junit.Test
 
