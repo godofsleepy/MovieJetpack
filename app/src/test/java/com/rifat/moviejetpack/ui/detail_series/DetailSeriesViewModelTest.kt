@@ -55,7 +55,13 @@ class DetailSeriesViewModelTest {
         Mockito.verify(observer).onChanged(dummySeries)
 
         Assert.assertNotNull(list)
-
+        Assert.assertEquals(dummySeries.name, list?.name)
+        Assert.assertEquals(dummySeries.adult, list?.adult)
+        Assert.assertEquals(dummySeries.original_language, list?.original_language)
+        Assert.assertEquals(dummySeries.vote_average, list?.vote_average)
+        Assert.assertEquals(dummySeries.backdrop_path, list?.backdrop_path)
+        Assert.assertEquals(dummySeries.first_air_date, list?.first_air_date)
+        Assert.assertEquals(dummySeries.poster_path, list?.poster_path)
     }
 
 }

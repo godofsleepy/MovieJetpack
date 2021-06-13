@@ -61,6 +61,7 @@ class FilmViewModelTest {
         viewModel.getMovies().observeForever(observer)
         Mockito.verify(observer).onChanged(dummyMovie)
         Assert.assertNotNull(list)
+        Assert.assertEquals(dummyMovie.size, list?.size)
     }
 
     @Test
@@ -77,5 +78,6 @@ class FilmViewModelTest {
         viewModel.getGenres().observeForever(observerGenre)
         Mockito.verify(observerGenre).onChanged(dummyGenre)
         Assert.assertNotNull(list)
+        Assert.assertEquals(dummyGenre.size, list?.size)
     }
 }

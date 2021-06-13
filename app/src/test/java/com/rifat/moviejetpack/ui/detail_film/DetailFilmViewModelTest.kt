@@ -55,6 +55,14 @@ class DetailFilmViewModelTest {
         Mockito.verify(observer).onChanged(dummyMovie)
 
         Assert.assertNotNull(list)
+        Assert.assertEquals(dummyMovie.title, list?.title)
+        Assert.assertEquals(dummyMovie.adult, list?.adult)
+        Assert.assertEquals(dummyMovie.backdrop_path, list?.backdrop_path)
+        Assert.assertEquals(dummyMovie.original_language, list?.original_language)
+        Assert.assertEquals(dummyMovie.overview, list?.overview)
+        Assert.assertEquals(dummyMovie.poster_path, list?.poster_path)
+        Assert.assertEquals(dummyMovie.release_date, list?.release_date)
+        Assert.assertEquals(dummyMovie.vote_average, list?.vote_average)
     }
 
 }

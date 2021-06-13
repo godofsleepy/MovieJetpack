@@ -58,6 +58,7 @@ class SeriesViewModelTest {
         viewModel.getSeries().observeForever(observer)
         Mockito.verify(observer).onChanged(dummySeries)
         Assert.assertNotNull(list)
+        Assert.assertEquals(dummySeries.size, list?.size)
     }
 
     @Test
@@ -74,5 +75,6 @@ class SeriesViewModelTest {
         viewModel.getGenres().observeForever(observerGenre)
         Mockito.verify(observerGenre).onChanged(dummyGenre)
         Assert.assertNotNull(list)
+        Assert.assertEquals(dummyGenre.size, list?.size)
     }
 }
