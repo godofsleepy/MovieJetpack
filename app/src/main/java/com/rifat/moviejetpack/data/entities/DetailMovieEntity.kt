@@ -20,5 +20,16 @@ data class DetailMovieEntity(
     @SerializedName("vote_average")
     var vote_average: Double,
     @SerializedName("adult")
-    var adult: Boolean = false
+    var adult: Boolean = false,
+    @SerializedName("genres")
+    var genres: List<GenreEntity> = emptyList(),
+    @SerializedName("production_companies")
+    var productionCompany: List<ProductionCompany> = emptyList()
+)
+
+data class ProductionCompany(
+    @SerializedName("logo_path")
+    var logo: String,
+    @SerializedName("name")
+    var name: String,
 )

@@ -50,6 +50,7 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
@@ -66,16 +67,17 @@
                 android:id="@+id/cardAdult"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/grey"
+                android:layout_marginStart="8dp"
 
-                app:cardCornerRadius="4dp"
-                app:layout_constraintStart_toStartOf="parent"
+                android:background="@color/grey"
+                app:cardCornerRadius="6dp"
+                app:layout_constraintStart_toEndOf="@+id/cardView5"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_margin="4dp"
+                    android:layout_margin="6dp"
                     android:text="@string/_18" />
             </androidx.cardview.widget.CardView>
 
@@ -83,19 +85,16 @@
                 android:id="@+id/cardView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
-                android:layout_marginStart="8dp"
                 android:background="@color/grey"
-                app:cardCornerRadius="4dp"
-                app:layout_constraintStart_toEndOf="@+id/cardAdult"
+                app:cardCornerRadius="6dp"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
+                    android:id="@+id/txt_genres"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_margin="4dp"
-                    android:layout_marginStart="48dp"
-                    android:layout_marginTop="12dp"
+                    android:layout_margin="6dp"
                     android:text="@string/action" />
 
             </androidx.cardview.widget.CardView>
@@ -107,7 +106,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:background="@color/grey"
-                app:cardCornerRadius="4dp"
+                app:cardCornerRadius="6dp"
                 app:layout_constraintStart_toEndOf="@+id/cardView4"
                 app:layout_constraintTop_toTopOf="parent">
 
@@ -115,9 +114,7 @@
                     android:id="@+id/txt_rate"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_margin="4dp"
-                    android:layout_marginStart="48dp"
-                    android:layout_marginTop="12dp"
+                    android:layout_margin="6dp"
                     android:text="@string/_4_5"
                     app:drawableLeftCompat="@drawable/ic_baseline_star_24" />
 
@@ -134,9 +131,9 @@
                 android:textStyle="bold"
                 app:layout_constrainedWidth="true"
                 app:layout_constraintEnd_toStartOf="@+id/txt_date"
-                app:layout_constraintHorizontal_bias="0.05"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cardView5" />
+                app:layout_constraintTop_toBottomOf="@+id/cardView4" />
 
             <TextView
                 android:id="@+id/txt_desc"

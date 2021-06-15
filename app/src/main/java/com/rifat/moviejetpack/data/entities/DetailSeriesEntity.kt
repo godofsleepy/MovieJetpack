@@ -13,6 +13,8 @@ data class DetailSeriesEntity(
     var original_language: String,
     @SerializedName("poster_path")
     var poster_path: String,
+    @SerializedName("genres")
+    var genres: List<GenreEntity>? = emptyList(),
     @SerializedName("backdrop_path")
     var backdrop_path: String,
     @SerializedName("first_air_date")
