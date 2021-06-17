@@ -14,5 +14,9 @@
     <string name="_18">18+</string>
     <string name="action">Action</string>
     <string name="_4_5">4.5</string>
+    <string name="companies">Companies</string>
+    <string name="en">en</string>
+    <string name="visit">Visit</string>
+    <string name="related_movie">Related Movie</string>
 
 </resources>

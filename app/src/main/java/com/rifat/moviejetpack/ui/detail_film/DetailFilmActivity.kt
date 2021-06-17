@@ -1,13 +1,16 @@
 package com.rifat.moviejetpack.ui.detail_film
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isGone
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.rifat.moviejetpack.databinding.ActivityDetailFilmBinding
 import com.rifat.moviejetpack.utils.viewmodel.ViewModelFactory
+import java.util.*
 
 
 class DetailFilmActivity : AppCompatActivity() {
@@ -34,6 +37,12 @@ class DetailFilmActivity : AppCompatActivity() {
                 binding.txtDate.text = movie.release_date
                 binding.txtDesc.text = movie.overview
                 binding.txtRate.text = movie.vote_average.toString()
+                binding.txtLanguage.text = movie.original_language.uppercase(Locale.getDefault())
+                if (movie.productionCompany.isNotEmpty()) {
+                    Glide.with(applicationContext)
+                        .load("https://image.tmdb.org/t/p/w500" + movie.productionCompany[0].logo)
+                        .into(binding.profileImage)
+                }
                 if (movie.genres.isNotEmpty()) {
                     if (movie.genres.size == 1) {
                         binding.txtGenres.text = movie.genres[0].name
@@ -41,13 +50,28 @@ class DetailFilmActivity : AppCompatActivity() {
                         val genres = "${movie.genres[0].name}, ${movie.genres[1].name}"
                         binding.txtGenres.text = genres
                     }
-                }else {
-                    binding.cardView4.visibility = View.GONE
+                } else {
+                    binding.textView2.visibility = View.GONE
                 }
-                binding.cardAdult.isGone = !movie.adult
+                binding.textView2.isGone = !movie.adult
                 Glide.with(applicationContext)
                     .load("https://image.tmdb.org/t/p/w500" + movie.backdrop_path)
                     .into(binding.detailImage)
+                Glide.with(applicationContext)
+                    .load("https://image.tmdb.org/t/p/w500" + movie.poster_path)
+                    .into(binding.imgPoster)
+                if (movie.homepage.isNotEmpty()){
+                    binding.button.setOnClickListener {
+                        val uriUrl: Uri = Uri.parse(movie.homepage)
+                        val launchBrowser = Intent(Intent.ACTION_VIEW, uriUrl)
+                        startActivity(launchBrowser)
+                    }
+                }else {
+                    binding.button.visibility = View.GONE
+                }
+                binding.buttonAdd.setOnClickListener {
+
+                }
             })
 
         }

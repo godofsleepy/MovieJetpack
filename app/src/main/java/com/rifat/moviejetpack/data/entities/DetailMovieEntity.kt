@@ -24,7 +24,9 @@ data class DetailMovieEntity(
     @SerializedName("genres")
     var genres: List<GenreEntity> = emptyList(),
     @SerializedName("production_companies")
-    var productionCompany: List<ProductionCompany> = emptyList()
+    var productionCompany: List<ProductionCompany> = emptyList(),
+    @SerializedName("homepage")
+    var homepage: String = "",
 )
 
 data class ProductionCompany(
