@@ -30,4 +30,7 @@ interface ApiService {
 
     @GET("genre/tv/list")
     fun getGenreSeries(@Query("api_key") key: String): Call<GenreResponse>
+
+    @GET("movie/popular")
+    fun getListMovieByGenre(@Query("api_key") key: String, @Query("with_genres") genre: String): Call<MovieResponse>
 }

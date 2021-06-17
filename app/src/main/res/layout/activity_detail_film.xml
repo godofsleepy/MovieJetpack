@@ -174,7 +174,7 @@
                     <ImageView
                         android:id="@+id/img_poster"
                         android:layout_width="150dp"
-                        android:layout_height="200dp"
+                        android:layout_height="wrap_content"
                         android:background="@color/design_default_color_error"
                         android:contentDescription="@string/todo" />
                 </androidx.cardview.widget.CardView>

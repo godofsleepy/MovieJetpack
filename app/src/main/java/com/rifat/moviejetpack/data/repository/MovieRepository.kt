@@ -16,6 +16,8 @@ interface MovieDataSource {
     fun getDetailMovie(id: String): LiveData<DetailMovieEntity>
 
     fun getMovieGenre(): LiveData<List<GenreEntity>>
+
+    fun getMovieByGenre(idGenre: String): LiveData<List<MovieEntity>>
 }
 
 class MovieRepository private constructor(private val remoteDataSource: RemoteDataSource) :
@@ -67,6 +69,20 @@ class MovieRepository private constructor(private val remoteDataSource: RemoteDa
         }
 
         return genreResult
+    }
+
+    override fun getMovieByGenre(idGenre: String): LiveData<List<MovieEntity>> {
+        val movieResult = MutableLiveData<List<MovieEntity>>()
+        CoroutineScope(Dispatchers.IO).launch {
+            remoteDataSource.getListMovieByGenre(idGenre,
+                object : RemoteDataSource.LoadListMovieByGenre {
+                    override fun onListMovieByGenreReceived(movieResponses: List<MovieEntity>) {
+                        movieResult.postValue(movieResponses)
+                    }
+                })
+        }
+
+        return movieResult
     }
 
 }
