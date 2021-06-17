@@ -27,6 +27,8 @@ data class DetailMovieEntity(
     var productionCompany: List<ProductionCompany> = emptyList(),
     @SerializedName("homepage")
     var homepage: String = "",
+    @SerializedName("tagline")
+    var tagline: String = "MovieJetpack"
 )
 
 data class ProductionCompany(

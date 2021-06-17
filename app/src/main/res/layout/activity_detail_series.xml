@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:context=".ui.detail_series.DetailSeriesActivity">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -11,7 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="280dp"
         android:animateLayoutChanges="true"
-        android:background="?attr/colorSurface"
         android:fitsSystemWindows="true"
         android:stateListAnimator="@animator/show_toolbar"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">

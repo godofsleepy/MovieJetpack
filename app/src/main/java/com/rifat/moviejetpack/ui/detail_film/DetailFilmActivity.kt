@@ -37,6 +37,7 @@ class DetailFilmActivity : AppCompatActivity() {
             val movieId: Int = extras.getInt(EXTRA_MOVIES)
             viewModel.getDetailFilm(movieId).observe(this, { movie ->
                 binding.progressBar.visibility = View.GONE
+                binding.toolbarLayout.title = "\"${movie.tagline}\""
                 binding.txtTitle.text = movie.title
                 binding.txtDate.text = movie.release_date
                 binding.txtDesc.text = movie.overview
@@ -70,13 +71,13 @@ class DetailFilmActivity : AppCompatActivity() {
                 Glide.with(applicationContext)
                     .load("https://image.tmdb.org/t/p/w500" + movie.poster_path)
                     .into(binding.imgPoster)
-                if (movie.homepage.isNotEmpty()){
+                if (movie.homepage.isNotEmpty()) {
                     binding.button.setOnClickListener {
                         val uriUrl: Uri = Uri.parse(movie.homepage)
                         val launchBrowser = Intent(Intent.ACTION_VIEW, uriUrl)
                         startActivity(launchBrowser)
                     }
-                }else {
+                } else {
                     binding.button.visibility = View.GONE
                 }
                 binding.buttonAdd.setOnClickListener {
@@ -84,7 +85,7 @@ class DetailFilmActivity : AppCompatActivity() {
                 }
             })
 
-            with(binding.listRelated){
+            with(binding.listRelated) {
                 binding.listRelated.layoutManager =
                     LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                 binding.listRelated.setHasFixedSize(false)

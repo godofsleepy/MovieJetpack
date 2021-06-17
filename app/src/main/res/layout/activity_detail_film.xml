@@ -23,7 +23,9 @@
             android:fitsSystemWindows="true"
             app:contentScrim="?attr/colorSurface"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
-            app:titleEnabled="false"
+            app:titleEnabled="true"
+            app:title="Movie Jetpack"
+            app:expandedTitleTextAppearance="@style/CollapsingToolbarLayoutExpandedTextStyle"
             app:toolbarId="@id/toolbar">
 
             <ImageView
@@ -44,7 +46,6 @@
                 app:layout_collapseMode="pin"
                 app:navigationIcon="@drawable/ic_baseline_arrow_back_24"
                 app:popupTheme="@style/ThemeOverlay.MaterialComponents.Light"
-                app:title="Detail"
                 app:titleTextColor="@color/white" />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
