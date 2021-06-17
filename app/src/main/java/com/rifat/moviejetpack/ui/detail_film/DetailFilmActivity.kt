@@ -7,9 +7,13 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isGone
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.rifat.moviejetpack.databinding.ActivityDetailFilmBinding
+import com.rifat.moviejetpack.utils.adapter.RelatedMovieAdapter
 import com.rifat.moviejetpack.utils.viewmodel.ViewModelFactory
+import kotlinx.android.synthetic.main.activity_detail_film.*
+import kotlinx.android.synthetic.main.fragment_film.*
 import java.util.*
 
 
@@ -27,7 +31,7 @@ class DetailFilmActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowTitleEnabled(false)
         val factory = ViewModelFactory.getInstance()
         val viewModel = ViewModelProvider(this, factory)[DetailFilmViewModel::class.java]
-
+        val relatedMovieAdapter = RelatedMovieAdapter()
         val extras = intent.extras
         if (extras != null) {
             val movieId: Int = extras.getInt(EXTRA_MOVIES)
@@ -50,6 +54,12 @@ class DetailFilmActivity : AppCompatActivity() {
                         val genres = "${movie.genres[0].name}, ${movie.genres[1].name}"
                         binding.txtGenres.text = genres
                     }
+                    viewModel.getRelatedMovie(movie.genres[0].id.toString()).observe(this, {
+                        binding.progress.visibility = View.GONE
+                        relatedMovieAdapter.setAdapterMovie(movie.id.toString())
+                        relatedMovieAdapter.setData(it)
+                        relatedMovieAdapter.notifyDataSetChanged()
+                    })
                 } else {
                     binding.textView2.visibility = View.GONE
                 }
@@ -73,6 +83,13 @@ class DetailFilmActivity : AppCompatActivity() {
 
                 }
             })
+
+            with(binding.listRelated){
+                binding.listRelated.layoutManager =
+                    LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                binding.listRelated.setHasFixedSize(false)
+                binding.listRelated.adapter = relatedMovieAdapter
+            }
 
         }
     }
