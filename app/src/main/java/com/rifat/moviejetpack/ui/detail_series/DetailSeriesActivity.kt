@@ -38,6 +38,8 @@ class DetailSeriesActivity : AppCompatActivity() {
                 binding.txtLanguage.text = series.original_language.uppercase()
                 binding.txtRate.text = series.vote_average.toString()
                 binding.textView2.isGone = !series.adult
+                binding.txtTotalepisode.text = "${series.episode} Episode"
+                binding.txtTotalseason.text = "${series.season} Season"
                 if (series.productionCompany.isNotEmpty()) {
                     Glide.with(applicationContext)
                         .load("https://image.tmdb.org/t/p/w500" + series.productionCompany[0].logo)
@@ -52,6 +54,13 @@ class DetailSeriesActivity : AppCompatActivity() {
                     }
                 } else {
                     binding.textView2.visibility = View.GONE
+                }
+                if (series.networksList.isNotEmpty()){
+                    Glide.with(applicationContext)
+                        .load("https://image.tmdb.org/t/p/w500" + series.networksList[0].logo)
+                        .into(binding.networkImage)
+                }else {
+                    binding.networkImage.visibility = View.GONE
                 }
                 Glide.with(applicationContext)
                     .load("https://image.tmdb.org/t/p/w500" + series.backdrop_path)

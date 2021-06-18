@@ -18,5 +18,9 @@
     <string name="en">en</string>
     <string name="visit">Visit</string>
     <string name="related_movie">Related Movie</string>
+    <string name="more">More On</string>
+    <string name="total_seasons">Total Seasons</string>
+    <string name="_0_episode">0 Episode</string>
+    <string name="total_episode">Total Episode</string>
 
 </resources>
