@@ -1,5 +1,7 @@
 package com.rifat.moviejetpack.ui.detail_series
 
+import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -31,12 +33,41 @@ class DetailSeriesActivity : AppCompatActivity() {
                 binding.progressBar.visibility = View.GONE
                 binding.txtTitle.text = series.name
                 binding.txtDate.text = series.first_air_date
+                binding.toolbarLayout.title = "\"${series.tagline}\""
                 binding.txtDesc.text = series.overview
+                binding.txtLanguage.text = series.original_language.uppercase()
                 binding.txtRate.text = series.vote_average.toString()
-                binding.cardAdult.isGone = !series.adult
+                binding.textView2.isGone = !series.adult
+                if (series.productionCompany.isNotEmpty()) {
+                    Glide.with(applicationContext)
+                        .load("https://image.tmdb.org/t/p/w500" + series.productionCompany[0].logo)
+                        .into(binding.profileImage)
+                }
+                if (series.genres.isNotEmpty()) {
+                    if (series.genres.size == 1) {
+                        binding.txtGenres.text = series.genres[0].name
+                    } else {
+                        val genres = "${series.genres[0].name}, ${series.genres[1].name}"
+                        binding.txtGenres.text = genres
+                    }
+                } else {
+                    binding.textView2.visibility = View.GONE
+                }
                 Glide.with(applicationContext)
                     .load("https://image.tmdb.org/t/p/w500" + series.backdrop_path)
                     .into(binding.detailImage)
+                Glide.with(applicationContext)
+                    .load("https://image.tmdb.org/t/p/w500" + series.poster_path)
+                    .into(binding.imgPoster)
+                if (series.homepage.isNotEmpty()) {
+                    binding.button.setOnClickListener {
+                        val uriUrl: Uri = Uri.parse(series.homepage)
+                        val launchBrowser = Intent(Intent.ACTION_VIEW, uriUrl)
+                        startActivity(launchBrowser)
+                    }
+                } else {
+                    binding.button.visibility = View.GONE
+                }
             })
 
         }

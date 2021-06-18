@@ -37,6 +37,7 @@ class FilmFragment : Fragment() {
                 progressBar.visibility = View.GONE
                 filmAdapter.setData(movies)
                 filmAdapter.notifyDataSetChanged()
+                list_movie.visibility = View.VISIBLE
             })
 
             with(list_movie) {

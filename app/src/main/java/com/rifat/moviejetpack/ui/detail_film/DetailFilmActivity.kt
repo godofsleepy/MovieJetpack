@@ -10,10 +10,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.rifat.moviejetpack.databinding.ActivityDetailFilmBinding
+
 import com.rifat.moviejetpack.utils.adapter.RelatedMovieAdapter
 import com.rifat.moviejetpack.utils.viewmodel.ViewModelFactory
-import kotlinx.android.synthetic.main.activity_detail_film.*
-import kotlinx.android.synthetic.main.fragment_film.*
 import java.util.*
 
 

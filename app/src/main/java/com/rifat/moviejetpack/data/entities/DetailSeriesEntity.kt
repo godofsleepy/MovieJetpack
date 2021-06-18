@@ -14,7 +14,7 @@ data class DetailSeriesEntity(
     @SerializedName("poster_path")
     var poster_path: String,
     @SerializedName("genres")
-    var genres: List<GenreEntity>? = emptyList(),
+    var genres: List<GenreEntity> = emptyList(),
     @SerializedName("backdrop_path")
     var backdrop_path: String,
     @SerializedName("first_air_date")
@@ -22,5 +22,41 @@ data class DetailSeriesEntity(
     @SerializedName("vote_average")
     var vote_average: Double,
     @SerializedName("adult")
-    var adult: Boolean = false
+    var adult: Boolean = false,
+    @SerializedName("homepage")
+    var homepage: String = "",
+    @SerializedName("production_companies")
+    var productionCompany: List<ProductionCompany> = emptyList(),
+    @SerializedName("tagline")
+    var tagline: String = "MovieJetpack",
+    @SerializedName("number_of_episodes")
+    var episode: Int = 0,
+    @SerializedName("number_of_seasons")
+    var season: Int = 0,
+    @SerializedName("networks")
+    var networksList: List<Networks> = emptyList(),
+    @SerializedName("seasons")
+    var seasons: List<Season> = emptyList()
+)
+
+data class Networks(
+    @SerializedName("name")
+    var name: String = "",
+    @SerializedName("logo_path")
+    var logo: String = ""
+)
+
+data class Season(
+    @SerializedName("air_date")
+    var release: String = "",
+    @SerializedName("episode_count")
+    var episode: Int = 0,
+    @SerializedName("name")
+    var name: String = "",
+    @SerializedName("overview")
+    var overview: String = "",
+    @SerializedName("poster_path")
+    var poster_path: String = "",
+    @SerializedName("season_number")
+    var season: Int = 0
 )

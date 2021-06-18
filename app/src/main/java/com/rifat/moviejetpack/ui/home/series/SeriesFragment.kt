@@ -13,6 +13,7 @@ import com.rifat.moviejetpack.utils.adapter.ListGenreAdapter
 import com.rifat.moviejetpack.utils.adapter.ListSeriesAdapter
 import com.rifat.moviejetpack.utils.viewmodel.ViewModelFactory
 import kotlinx.android.synthetic.main.fragment_series.*
+import kotlinx.android.synthetic.main.fragment_series.listgenre
 
 class SeriesFragment : Fragment() {
 
@@ -37,6 +38,7 @@ class SeriesFragment : Fragment() {
                 progressBar3.visibility = View.GONE
                 seriesAdapter.setData(series)
                 seriesAdapter.notifyDataSetChanged()
+                list_series.visibility = View.VISIBLE
             })
             with(list_series) {
                 list_series.layoutManager =
