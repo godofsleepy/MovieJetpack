@@ -57,6 +57,4 @@ data class Season(
     var overview: String = "",
     @SerializedName("poster_path")
     var poster_path: String = "",
-    @SerializedName("season_number")
-    var season: Int = 0
 )

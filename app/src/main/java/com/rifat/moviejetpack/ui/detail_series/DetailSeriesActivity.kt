@@ -7,9 +7,12 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.view.isGone
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.rifat.moviejetpack.databinding.ActivityDetailSeriesBinding
+import com.rifat.moviejetpack.utils.adapter.ListSeasonAdapter
 import com.rifat.moviejetpack.utils.viewmodel.ViewModelFactory
+import kotlinx.android.synthetic.main.activity_detail_series.*
 
 class DetailSeriesActivity : AppCompatActivity() {
 
@@ -25,7 +28,7 @@ class DetailSeriesActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowTitleEnabled(false)
         val factory = ViewModelFactory.getInstance()
         val viewModel = ViewModelProvider(this, factory)[DetailSeriesViewModel::class.java]
-
+        val listSeasonAdapter = ListSeasonAdapter()
         val extras = intent.extras
         if (extras != null) {
             val seriesId: Int = extras.getInt(EXTRA_SERIES)
@@ -45,6 +48,10 @@ class DetailSeriesActivity : AppCompatActivity() {
                         .load("https://image.tmdb.org/t/p/w500" + series.productionCompany[0].logo)
                         .into(binding.profileImage)
                 }
+                if (series.seasons.isNotEmpty()){
+                    listSeasonAdapter.setData(series.seasons)
+                    listSeasonAdapter.notifyDataSetChanged()
+                }
                 if (series.genres.isNotEmpty()) {
                     if (series.genres.size == 1) {
                         binding.txtGenres.text = series.genres[0].name
@@ -60,7 +67,7 @@ class DetailSeriesActivity : AppCompatActivity() {
                         .load("https://image.tmdb.org/t/p/w500" + series.networksList[0].logo)
                         .into(binding.networkImage)
                 }else {
-                    binding.networkImage.visibility = View.GONE
+                    binding.cardView4.visibility = View.GONE
                 }
                 Glide.with(applicationContext)
                     .load("https://image.tmdb.org/t/p/w500" + series.backdrop_path)
@@ -78,6 +85,12 @@ class DetailSeriesActivity : AppCompatActivity() {
                     binding.button.visibility = View.GONE
                 }
             })
+            with(rv_season){
+                binding.rvSeason.layoutManager =
+                    LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                binding.rvSeason.setHasFixedSize(false)
+                binding.rvSeason.adapter = listSeasonAdapter
+            }
 
         }
     }

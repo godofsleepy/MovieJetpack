@@ -249,6 +249,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/txt_desc" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -267,8 +268,8 @@
                     <ImageView
                         android:id="@+id/network_image"
                         android:layout_width="180dp"
-                        android:layout_margin="4dp"
                         android:layout_height="wrap_content"
+                        android:layout_margin="4dp"
                         android:contentDescription="@string/todo" />
                 </androidx.cardview.widget.CardView>
 
@@ -323,6 +324,15 @@
                     app:layout_constraintTop_toBottomOf="@+id/textView5" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:listitem="@layout/item_season"
+                android:layout_marginTop="16dp"
+                android:id="@+id/rv_season"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
