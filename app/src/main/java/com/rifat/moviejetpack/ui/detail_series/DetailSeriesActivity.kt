@@ -11,8 +11,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.rifat.moviejetpack.databinding.ActivityDetailSeriesBinding
 import com.rifat.moviejetpack.utils.adapter.ListSeasonAdapter
+import com.rifat.moviejetpack.utils.adapter.RelatedSeriesAdapter
 import com.rifat.moviejetpack.utils.viewmodel.ViewModelFactory
-import kotlinx.android.synthetic.main.activity_detail_series.*
 
 class DetailSeriesActivity : AppCompatActivity() {
 
@@ -29,6 +29,7 @@ class DetailSeriesActivity : AppCompatActivity() {
         val factory = ViewModelFactory.getInstance()
         val viewModel = ViewModelProvider(this, factory)[DetailSeriesViewModel::class.java]
         val listSeasonAdapter = ListSeasonAdapter()
+        val relatedSeriesAdapter = RelatedSeriesAdapter()
         val extras = intent.extras
         if (extras != null) {
             val seriesId: Int = extras.getInt(EXTRA_SERIES)
@@ -59,6 +60,12 @@ class DetailSeriesActivity : AppCompatActivity() {
                         val genres = "${series.genres[0].name}, ${series.genres[1].name}"
                         binding.txtGenres.text = genres
                     }
+                    viewModel.getRelatedSeries(series.genres[0].id.toString()).observe(this, {
+                        binding.progress.visibility = View.GONE
+                        relatedSeriesAdapter.setAdapterSeries(series.id.toString())
+                        relatedSeriesAdapter.setData(it)
+                        relatedSeriesAdapter.notifyDataSetChanged()
+                    })
                 } else {
                     binding.textView2.visibility = View.GONE
                 }
@@ -85,11 +92,17 @@ class DetailSeriesActivity : AppCompatActivity() {
                     binding.button.visibility = View.GONE
                 }
             })
-            with(rv_season){
+            with(binding.rvSeason){
                 binding.rvSeason.layoutManager =
                     LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
                 binding.rvSeason.setHasFixedSize(false)
                 binding.rvSeason.adapter = listSeasonAdapter
+            }
+            with(binding.listRelated) {
+                binding.listRelated.layoutManager =
+                    LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                binding.listRelated.setHasFixedSize(false)
+                binding.listRelated.adapter = relatedSeriesAdapter
             }
 
         }

@@ -15,7 +15,7 @@ interface SeriesDataSource {
 
     fun getSeriesGenre(): LiveData<List<GenreEntity>>
 
-    fun getListSeries(idGenre: String): LiveData<List<SeriesEntity>>
+    fun getListSeriesByGenre(idGenre: String): LiveData<List<SeriesEntity>>
 }
 
 class SeriesRepository private constructor(private val remoteDataSource: RemoteDataSource) :
@@ -43,7 +43,7 @@ class SeriesRepository private constructor(private val remoteDataSource: RemoteD
         return series
     }
 
-    override fun getListSeries(idGenre: String): LiveData<List<SeriesEntity>> {
+    override fun getListSeriesByGenre(idGenre: String): LiveData<List<SeriesEntity>> {
         val series = MutableLiveData<List<SeriesEntity>>()
         CoroutineScope(Dispatchers.IO).launch {
             remoteDataSource.getSeriesByGenre(idGenre,

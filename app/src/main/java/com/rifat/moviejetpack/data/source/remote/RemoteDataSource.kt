@@ -81,7 +81,7 @@ class RemoteDataSource {
 
     suspend fun getSeriesByGenre(idGenre: String, callback: LoadListSeriesCallback) {
         EspressoIdlingResource.increment()
-        getApiService().getSeriesByGenre(idGenre, BuildConfig.MOVIEDB_ACCESS_KEY)
+        getApiService().getSeriesByGenre( BuildConfig.MOVIEDB_ACCESS_KEY, idGenre)
             .await().results?.let {
             callback.onListSeriesReceived(it)
             EspressoIdlingResource.decrement()

@@ -8,6 +8,6 @@ import com.rifat.moviejetpack.data.entities.MovieEntity
 
 class FilmViewModel(private val movieRepository: MovieRepository) : ViewModel() {
 
-    fun getMovies() : LiveData<List<MovieEntity>> = movieRepository.getListMovie()
-    fun getGenres() : LiveData<List<GenreEntity>> = movieRepository.getMovieGenre()
+    fun getMovies(): LiveData<List<MovieEntity>> = movieRepository.getListMovie()
+    fun getGenres(): LiveData<List<GenreEntity>> = movieRepository.getMovieGenre()
 }
