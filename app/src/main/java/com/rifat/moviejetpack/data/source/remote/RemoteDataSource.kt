@@ -45,9 +45,10 @@ class RemoteDataSource {
 
     }
 
-    suspend fun getListMovieByGenre(idGenre: String ,callback: LoadListMovieByGenre) {
+    suspend fun getListMovieByGenre(idGenre: String, callback: LoadListMovieByGenre) {
         EspressoIdlingResource.increment()
-        getApiService().getListMovieByGenre(BuildConfig.MOVIEDB_ACCESS_KEY, idGenre).await().results?.let {
+        getApiService().getListMovieByGenre(BuildConfig.MOVIEDB_ACCESS_KEY, idGenre)
+            .await().results?.let {
             callback.onListMovieByGenreReceived(it)
             EspressoIdlingResource.decrement()
         }
@@ -73,6 +74,15 @@ class RemoteDataSource {
     suspend fun getListSeries(callback: LoadListSeriesCallback) {
         EspressoIdlingResource.increment()
         getApiService().getListSeries(BuildConfig.MOVIEDB_ACCESS_KEY).await().results?.let {
+            callback.onListSeriesReceived(it)
+            EspressoIdlingResource.decrement()
+        }
+    }
+
+    suspend fun getSeriesByGenre(idGenre: String, callback: LoadListSeriesCallback) {
+        EspressoIdlingResource.increment()
+        getApiService().getSeriesByGenre(idGenre, BuildConfig.MOVIEDB_ACCESS_KEY)
+            .await().results?.let {
             callback.onListSeriesReceived(it)
             EspressoIdlingResource.decrement()
         }

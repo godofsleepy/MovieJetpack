@@ -14,6 +14,8 @@ interface SeriesDataSource {
     fun getDetailSeries(id: String): LiveData<DetailSeriesEntity>
 
     fun getSeriesGenre(): LiveData<List<GenreEntity>>
+
+    fun getListSeries(idGenre: String): LiveData<List<SeriesEntity>>
 }
 
 class SeriesRepository private constructor(private val remoteDataSource: RemoteDataSource) :
@@ -37,6 +39,19 @@ class SeriesRepository private constructor(private val remoteDataSource: RemoteD
                     series.postValue(seriesResponse)
                 }
             })
+        }
+        return series
+    }
+
+    override fun getListSeries(idGenre: String): LiveData<List<SeriesEntity>> {
+        val series = MutableLiveData<List<SeriesEntity>>()
+        CoroutineScope(Dispatchers.IO).launch {
+            remoteDataSource.getSeriesByGenre(idGenre,
+                object : RemoteDataSource.LoadListSeriesCallback {
+                    override fun onListSeriesReceived(seriesResponse: List<SeriesEntity>) {
+                        series.postValue(seriesResponse)
+                    }
+                })
         }
         return series
     }
