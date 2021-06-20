@@ -4,15 +4,15 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.rifat.moviejetpack.data.entities.GenreEntity
+import com.rifat.moviejetpack.data.source.remote.responses.GenreResponse
 import com.rifat.moviejetpack.databinding.ItemGenreBinding
 import java.util.ArrayList
 
 class ListGenreAdapter : RecyclerView.Adapter<ListGenreAdapter.ViewHolder>() {
 
-    private val data = ArrayList<GenreEntity>()
+    private val data = ArrayList<GenreResponse>()
 
-    fun setData(data: List<GenreEntity>?) {
+    fun setData(data: List<GenreResponse>?) {
         if (data == null) return
         this.data.clear()
         this.data.addAll(data)

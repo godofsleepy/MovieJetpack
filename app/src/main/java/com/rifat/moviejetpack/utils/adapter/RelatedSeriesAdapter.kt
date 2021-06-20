@@ -6,16 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.rifat.moviejetpack.data.entities.SeriesEntity
+import com.rifat.moviejetpack.data.source.remote.responses.SeriesResponse
 import com.rifat.moviejetpack.databinding.ItemRelatedBinding
 import com.rifat.moviejetpack.ui.detail_series.DetailSeriesActivity
 import java.util.ArrayList
 
 class RelatedSeriesAdapter : RecyclerView.Adapter<RelatedSeriesAdapter.ViewHolder>() {
-    private val data = ArrayList<SeriesEntity>()
+    private val data = ArrayList<SeriesResponse>()
     private var seriesId = ""
 
-    fun setData(series: List<SeriesEntity>?) {
+    fun setData(series: List<SeriesResponse>?) {
         if (series == null) return
         this.data.clear()
         this.data.addAll(series)
@@ -28,7 +28,7 @@ class RelatedSeriesAdapter : RecyclerView.Adapter<RelatedSeriesAdapter.ViewHolde
     }
 
     inner class ViewHolder(private val binding: ItemRelatedBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(series: SeriesEntity) {
+        fun bind(series: SeriesResponse) {
             with(binding) {
                 cardView.visibility = View.VISIBLE
                 Glide.with(itemView.context)

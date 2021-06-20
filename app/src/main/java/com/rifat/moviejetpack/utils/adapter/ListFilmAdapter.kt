@@ -5,15 +5,15 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.rifat.moviejetpack.data.entities.MovieEntity
+import com.rifat.moviejetpack.data.source.remote.responses.MovieResponse
 import com.rifat.moviejetpack.databinding.ItemMovieBinding
 import com.rifat.moviejetpack.ui.detail_film.DetailFilmActivity
 import java.util.ArrayList
 
 class ListFilmAdapter : RecyclerView.Adapter<ListFilmAdapter.ViewHolder>() {
-    private val data = ArrayList<MovieEntity>()
+    private val data = ArrayList<MovieResponse>()
 
-    fun setData(movies: List<MovieEntity>?) {
+    fun setData(movies: List<MovieResponse>?) {
         if (movies == null) return
         this.data.clear()
         this.data.addAll(movies)
@@ -23,7 +23,7 @@ class ListFilmAdapter : RecyclerView.Adapter<ListFilmAdapter.ViewHolder>() {
 
     inner class ViewHolder(private val binding: ItemMovieBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(movie: MovieEntity) {
+        fun bind(movie: MovieResponse) {
             with(binding) {
                 txtRate.text = movie.vote_average.toString()
                 txtTitle.text = movie.title

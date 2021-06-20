@@ -1,18 +1,18 @@
-package com.rifat.moviejetpack.data.entities
+package com.rifat.moviejetpack.data.source.remote.responses
 
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
-data class SeriesResponse(
+data class SeriesBaseResponse(
     @SerializedName("page")
     var page : Int? = 0,
     @SerializedName("results")
-    var results: List<SeriesEntity>? = emptyList(),
+    var results: List<SeriesResponse>? = emptyList(),
     @SerializedName("total_pages")
     var total_pages: Int? = 0
 )
 
-data class SeriesEntity(
+data class SeriesResponse(
     @SerializedName("id")
     var id: Int,
     @SerializedName("name")

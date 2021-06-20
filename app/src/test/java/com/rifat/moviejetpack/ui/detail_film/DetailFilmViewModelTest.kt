@@ -6,9 +6,8 @@ import androidx.lifecycle.Observer
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.nhaarman.mockitokotlin2.verify
-import com.rifat.moviejetpack.data.FakeMovieRepository
-import com.rifat.moviejetpack.data.MovieRepository
-import com.rifat.moviejetpack.data.entities.DetailMovieEntity
+import com.rifat.moviejetpack.data.repository.MovieRepository
+import com.rifat.moviejetpack.data.source.remote.responses.DetailMovieResponse
 import org.junit.Assert
 import org.junit.Test
 
@@ -32,7 +31,7 @@ class DetailFilmViewModelTest {
     private lateinit var movieRepository: MovieRepository
 
     @Mock
-    private lateinit var observer: Observer<DetailMovieEntity>
+    private lateinit var observer: Observer<DetailMovieResponse>
 
     @Before
     fun setUp() {
@@ -43,9 +42,9 @@ class DetailFilmViewModelTest {
     @Test
     fun getDetailFilm() {
         val gson = Gson()
-        val typeMovie = object : TypeToken<DetailMovieEntity>() {}.type
-        val dummyMovie: DetailMovieEntity = gson.fromJson(data, typeMovie)
-        val movie = MutableLiveData<DetailMovieEntity>()
+        val typeMovie = object : TypeToken<DetailMovieResponse>() {}.type
+        val dummyMovie: DetailMovieResponse = gson.fromJson(data, typeMovie)
+        val movie = MutableLiveData<DetailMovieResponse>()
         movie.value = dummyMovie
 
         Mockito.`when`(movieRepository.getDetailMovie("837007")).thenReturn(movie)

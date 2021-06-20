@@ -1,4 +1,4 @@
-package com.rifat.moviejetpack.data.entities
+package com.rifat.moviejetpack.data.source.locale.entities
 
 import androidx.annotation.NonNull
 import androidx.room.ColumnInfo

@@ -8,10 +8,10 @@ import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.doAnswer
 import com.nhaarman.mockitokotlin2.eq
 import com.nhaarman.mockitokotlin2.verify
-import com.rifat.moviejetpack.data.entities.DetailSeriesEntity
-import com.rifat.moviejetpack.data.entities.GenreEntity
-import com.rifat.moviejetpack.data.entities.SeriesEntity
 import com.rifat.moviejetpack.data.source.remote.RemoteDataSource
+import com.rifat.moviejetpack.data.source.remote.responses.DetailSeriesResponse
+import com.rifat.moviejetpack.data.source.remote.responses.GenreResponse
+import com.rifat.moviejetpack.data.source.remote.responses.SeriesResponse
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
@@ -43,8 +43,8 @@ class SeriesRepositoryTest {
     @Test
     fun getListSeries() {
         val gson = Gson()
-        val listSeries = object : TypeToken<List<SeriesEntity>>() {}.type
-        val dummySeries: List<SeriesEntity> = gson.fromJson(seriesResponse, listSeries)
+        val listSeries = object : TypeToken<List<SeriesResponse>>() {}.type
+        val dummySeries: List<SeriesResponse> = gson.fromJson(seriesResponse, listSeries)
         runBlocking {
             doAnswer { invocation ->
                 (invocation.arguments[0] as RemoteDataSource.LoadListSeriesCallback)
@@ -63,8 +63,8 @@ class SeriesRepositoryTest {
     @Test
     fun getDetailSeries() {
         val gson = Gson()
-        val seriesType = object : TypeToken<DetailSeriesEntity>() {}.type
-        val dummySeries: DetailSeriesEntity = gson.fromJson(detailSerisResponse, seriesType)
+        val seriesType = object : TypeToken<DetailSeriesResponse>() {}.type
+        val dummySeries: DetailSeriesResponse = gson.fromJson(detailSerisResponse, seriesType)
         runBlocking {
             doAnswer { invocation ->
                 (invocation.arguments[1] as RemoteDataSource.LoadDetailSeriesCallback)
@@ -83,8 +83,8 @@ class SeriesRepositoryTest {
     @Test
     fun getSeriesGenre() {
         val gson = Gson()
-        val genreType = object : TypeToken<List<GenreEntity>>() {}.type
-        val dummyGenre: List<GenreEntity> = gson.fromJson(genreResponse, genreType)
+        val genreType = object : TypeToken<List<GenreResponse>>() {}.type
+        val dummyGenre: List<GenreResponse> = gson.fromJson(genreResponse, genreType)
         runBlocking {
             doAnswer { invocation ->
                 (invocation.arguments[0] as RemoteDataSource.LoadGenresCallback)

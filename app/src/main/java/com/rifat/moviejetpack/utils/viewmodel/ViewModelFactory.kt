@@ -2,7 +2,7 @@ package com.rifat.moviejetpack.utils.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.rifat.moviejetpack.data.MovieRepository
+import com.rifat.moviejetpack.data.repository.MovieRepository
 import com.rifat.moviejetpack.data.repository.SeriesRepository
 import com.rifat.moviejetpack.di.Injection
 import com.rifat.moviejetpack.ui.detail_film.DetailFilmViewModel

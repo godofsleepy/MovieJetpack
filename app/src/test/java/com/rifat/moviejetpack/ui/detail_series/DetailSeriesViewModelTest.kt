@@ -6,9 +6,8 @@ import androidx.lifecycle.Observer
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.nhaarman.mockitokotlin2.verify
-import com.rifat.moviejetpack.data.entities.DetailSeriesEntity
-import com.rifat.moviejetpack.data.repository.FakeSeriesRepository
 import com.rifat.moviejetpack.data.repository.SeriesRepository
+import com.rifat.moviejetpack.data.source.remote.responses.DetailSeriesResponse
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
@@ -31,7 +30,7 @@ class DetailSeriesViewModelTest {
     private lateinit var seriesRepository: SeriesRepository
 
     @Mock
-    private lateinit var observer: Observer<DetailSeriesEntity>
+    private lateinit var observer: Observer<DetailSeriesResponse>
 
     @Before
     fun setUp() {
@@ -43,9 +42,9 @@ class DetailSeriesViewModelTest {
     @Test
     fun getDetailSeries() {
         val gson = Gson()
-        val typeSeries = object : TypeToken<DetailSeriesEntity>() {}.type
-        val dummySeries: DetailSeriesEntity = gson.fromJson(data, typeSeries)
-        val series = MutableLiveData<DetailSeriesEntity>()
+        val typeSeries = object : TypeToken<DetailSeriesResponse>() {}.type
+        val dummySeries: DetailSeriesResponse = gson.fromJson(data, typeSeries)
+        val series = MutableLiveData<DetailSeriesResponse>()
         series.value = dummySeries
 
         Mockito.`when`(seriesRepository.getDetailSeries("1222585")).thenReturn(series)

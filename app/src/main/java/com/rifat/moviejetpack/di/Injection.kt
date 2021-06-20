@@ -1,7 +1,6 @@
 package com.rifat.moviejetpack.di
 
-import android.content.Context
-import com.rifat.moviejetpack.data.MovieRepository
+import com.rifat.moviejetpack.data.repository.MovieRepository
 import com.rifat.moviejetpack.data.repository.SeriesRepository
 import com.rifat.moviejetpack.data.source.remote.RemoteDataSource
 

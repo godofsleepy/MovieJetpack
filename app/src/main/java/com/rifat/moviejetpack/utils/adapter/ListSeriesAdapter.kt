@@ -2,22 +2,19 @@ package com.rifat.moviejetpack.utils.adapter
 
 import android.content.Intent
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.rifat.moviejetpack.data.entities.MovieEntity
-import com.rifat.moviejetpack.data.entities.SeriesEntity
+import com.rifat.moviejetpack.data.source.remote.responses.SeriesResponse
 import com.rifat.moviejetpack.databinding.ItemMovieBinding
-import com.rifat.moviejetpack.ui.detail_film.DetailFilmActivity
 import com.rifat.moviejetpack.ui.detail_series.DetailSeriesActivity
 import java.util.ArrayList
 
 class ListSeriesAdapter : RecyclerView.Adapter<ListSeriesAdapter.ViewHolder>() {
 
-    private val data = ArrayList<SeriesEntity>()
+    private val data = ArrayList<SeriesResponse>()
 
-    fun setData(series: List<SeriesEntity>?) {
+    fun setData(series: List<SeriesResponse>?) {
         if (series == null) return
         this.data.clear()
         this.data.addAll(series)
@@ -27,7 +24,7 @@ class ListSeriesAdapter : RecyclerView.Adapter<ListSeriesAdapter.ViewHolder>() {
 
     class ViewHolder(private val binding: ItemMovieBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(series: SeriesEntity) {
+        fun bind(series: SeriesResponse) {
             with(binding) {
                 txtRate.text = series.vote_average.toString()
                 txtTitle.text = series.name

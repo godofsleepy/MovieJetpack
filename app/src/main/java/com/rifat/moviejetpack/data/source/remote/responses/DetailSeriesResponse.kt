@@ -1,8 +1,8 @@
-package com.rifat.moviejetpack.data.entities
+package com.rifat.moviejetpack.data.source.remote.responses
 
 import com.google.gson.annotations.SerializedName
 
-data class DetailSeriesEntity(
+data class DetailSeriesResponse(
     @SerializedName("id")
     var id: Int,
     @SerializedName("name")
@@ -14,7 +14,7 @@ data class DetailSeriesEntity(
     @SerializedName("poster_path")
     var poster_path: String,
     @SerializedName("genres")
-    var genres: List<GenreEntity> = emptyList(),
+    var genres: List<GenreResponse> = emptyList(),
     @SerializedName("backdrop_path")
     var backdrop_path: String,
     @SerializedName("first_air_date")
@@ -26,7 +26,7 @@ data class DetailSeriesEntity(
     @SerializedName("homepage")
     var homepage: String = "",
     @SerializedName("production_companies")
-    var productionCompany: List<ProductionCompany> = emptyList(),
+    var productionCompany: List<ProductionCompanyResponse> = emptyList(),
     @SerializedName("tagline")
     var tagline: String = "MovieJetpack",
     @SerializedName("number_of_episodes")
@@ -34,19 +34,19 @@ data class DetailSeriesEntity(
     @SerializedName("number_of_seasons")
     var season: Int = 0,
     @SerializedName("networks")
-    var networksList: List<Networks> = emptyList(),
+    var networksList: List<NetworksResponse> = emptyList(),
     @SerializedName("seasons")
-    var seasons: List<Season> = emptyList()
+    var seasons: List<SeasonResponse> = emptyList()
 )
 
-data class Networks(
+data class NetworksResponse(
     @SerializedName("name")
     var name: String = "",
     @SerializedName("logo_path")
     var logo: String = ""
 )
 
-data class Season(
+data class SeasonResponse(
     @SerializedName("air_date")
     var release: String = "",
     @SerializedName("episode_count")

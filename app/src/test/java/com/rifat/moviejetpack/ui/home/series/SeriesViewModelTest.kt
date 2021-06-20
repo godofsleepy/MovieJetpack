@@ -6,9 +6,9 @@ import androidx.lifecycle.Observer
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.nhaarman.mockitokotlin2.verify
-import com.rifat.moviejetpack.data.entities.GenreEntity
-import com.rifat.moviejetpack.data.entities.SeriesEntity
 import com.rifat.moviejetpack.data.repository.SeriesRepository
+import com.rifat.moviejetpack.data.source.remote.responses.GenreResponse
+import com.rifat.moviejetpack.data.source.remote.responses.SeriesResponse
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
@@ -31,10 +31,10 @@ class SeriesViewModelTest {
     private lateinit var seriesRepository: SeriesRepository
 
     @Mock
-    private lateinit var observer: Observer<List<SeriesEntity>>
+    private lateinit var observer: Observer<List<SeriesResponse>>
 
     @Mock
-    private lateinit var observerGenre: Observer<List<GenreEntity>>
+    private lateinit var observerGenre: Observer<List<GenreResponse>>
 
     @Before
     fun setUp() {
@@ -47,9 +47,9 @@ class SeriesViewModelTest {
     @Test
     fun getSeries() {
         val gson = Gson()
-        val listSeries = object : TypeToken<List<SeriesEntity>>() {}.type
-        val dummySeries: List<SeriesEntity> = gson.fromJson(data, listSeries)
-        val series = MutableLiveData<List<SeriesEntity>>()
+        val listSeries = object : TypeToken<List<SeriesResponse>>() {}.type
+        val dummySeries: List<SeriesResponse> = gson.fromJson(data, listSeries)
+        val series = MutableLiveData<List<SeriesResponse>>()
         series.value = dummySeries
 
         Mockito.`when`(seriesRepository.getListSeries()).thenReturn(series)
@@ -64,9 +64,9 @@ class SeriesViewModelTest {
     @Test
     fun getGenres() {
         val gson = Gson()
-        val typeGenre = object : TypeToken<List<GenreEntity>>() {}.type
-        val dummyGenre: List<GenreEntity> = gson.fromJson(genreData, typeGenre)
-        val genres = MutableLiveData<List<GenreEntity>>()
+        val typeGenre = object : TypeToken<List<GenreResponse>>() {}.type
+        val dummyGenre: List<GenreResponse> = gson.fromJson(genreData, typeGenre)
+        val genres = MutableLiveData<List<GenreResponse>>()
         genres.value = dummyGenre
 
         Mockito.`when`(seriesRepository.getSeriesGenre()).thenReturn(genres)

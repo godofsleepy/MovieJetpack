@@ -2,13 +2,13 @@ package com.rifat.moviejetpack.ui.detail_film
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.rifat.moviejetpack.data.MovieRepository
-import com.rifat.moviejetpack.data.entities.DetailMovieEntity
-import com.rifat.moviejetpack.data.entities.MovieEntity
+import com.rifat.moviejetpack.data.repository.MovieRepository
+import com.rifat.moviejetpack.data.source.remote.responses.DetailMovieResponse
+import com.rifat.moviejetpack.data.source.remote.responses.MovieResponse
 
 class DetailFilmViewModel(private val movieRepository: MovieRepository) : ViewModel() {
 
-    fun getDetailFilm(id: Int): LiveData<DetailMovieEntity> = movieRepository.getDetailMovie(id.toString())
+    fun getDetailFilm(id: Int): LiveData<DetailMovieResponse> = movieRepository.getDetailMovie(id.toString())
 
-    fun getRelatedMovie(idGenre: String) : LiveData<List<MovieEntity>> = movieRepository.getMovieByGenre(idGenre)
+    fun getRelatedMovie(idGenre: String) : LiveData<List<MovieResponse>> = movieRepository.getMovieByGenre(idGenre)
 }

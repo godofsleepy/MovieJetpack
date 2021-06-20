@@ -1,13 +1,13 @@
-package com.rifat.moviejetpack.data.entities
+package com.rifat.moviejetpack.data.source.remote.responses
 
 import com.google.gson.annotations.SerializedName
 
-data class GenreResponse(
+data class GenreBaseResponse(
     @SerializedName("genres")
-    var genres: List<GenreEntity>? = emptyList(),
+    var genres: List<GenreResponse>? = emptyList(),
 )
 
-data class GenreEntity(
+data class GenreResponse(
     @SerializedName("id")
     var id: Int,
     @SerializedName("name")

@@ -1,23 +1,23 @@
-package com.rifat.moviejetpack.data
+package com.rifat.moviejetpack.data.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.rifat.moviejetpack.data.entities.DetailMovieEntity
-import com.rifat.moviejetpack.data.entities.GenreEntity
-import com.rifat.moviejetpack.data.entities.MovieEntity
 import com.rifat.moviejetpack.data.source.remote.RemoteDataSource
+import com.rifat.moviejetpack.data.source.remote.responses.DetailMovieResponse
+import com.rifat.moviejetpack.data.source.remote.responses.GenreResponse
+import com.rifat.moviejetpack.data.source.remote.responses.MovieResponse
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 interface MovieDataSource {
-    fun getListMovie(): LiveData<List<MovieEntity>>
+    fun getListMovie(): LiveData<List<MovieResponse>>
 
-    fun getDetailMovie(id: String): LiveData<DetailMovieEntity>
+    fun getDetailMovie(id: String): LiveData<DetailMovieResponse>
 
-    fun getMovieGenre(): LiveData<List<GenreEntity>>
+    fun getMovieGenre(): LiveData<List<GenreResponse>>
 
-    fun getMovieByGenre(idGenre: String): LiveData<List<MovieEntity>>
+    fun getMovieByGenre(idGenre: String): LiveData<List<MovieResponse>>
 }
 
 class MovieRepository private constructor(private val remoteDataSource: RemoteDataSource) :
@@ -33,11 +33,11 @@ class MovieRepository private constructor(private val remoteDataSource: RemoteDa
             }
     }
 
-    override fun getListMovie(): LiveData<List<MovieEntity>> {
-        val movieResult = MutableLiveData<List<MovieEntity>>()
+    override fun getListMovie(): LiveData<List<MovieResponse>> {
+        val movieResult = MutableLiveData<List<MovieResponse>>()
         CoroutineScope(Dispatchers.IO).launch {
             remoteDataSource.getListMovie(object : RemoteDataSource.LoadListMovieCallback {
-                override fun onListMovieReceived(movieResponses: List<MovieEntity>) {
+                override fun onListMovieReceived(movieResponses: List<MovieResponse>) {
                     movieResult.postValue(movieResponses)
                 }
             })
@@ -46,11 +46,11 @@ class MovieRepository private constructor(private val remoteDataSource: RemoteDa
         return movieResult
     }
 
-    override fun getDetailMovie(id: String): LiveData<DetailMovieEntity> {
-        val detailMovieResult = MutableLiveData<DetailMovieEntity>()
+    override fun getDetailMovie(id: String): LiveData<DetailMovieResponse> {
+        val detailMovieResult = MutableLiveData<DetailMovieResponse>()
         CoroutineScope(Dispatchers.IO).launch {
             remoteDataSource.getDetailMovie(id, object : RemoteDataSource.LoadDetailMovieCallback {
-                override fun onDetailMovieReceived(detailMovieEntity: DetailMovieEntity) {
+                override fun onDetailMovieReceived(detailMovieEntity: DetailMovieResponse) {
                     detailMovieResult.postValue(detailMovieEntity)
                 }
             })
@@ -58,11 +58,11 @@ class MovieRepository private constructor(private val remoteDataSource: RemoteDa
         return detailMovieResult
     }
 
-    override fun getMovieGenre(): LiveData<List<GenreEntity>> {
-        val genreResult = MutableLiveData<List<GenreEntity>>()
+    override fun getMovieGenre(): LiveData<List<GenreResponse>> {
+        val genreResult = MutableLiveData<List<GenreResponse>>()
         CoroutineScope(Dispatchers.IO).launch {
             remoteDataSource.getMovieGenre(object : RemoteDataSource.LoadGenresCallback {
-                override fun onGenresReceived(genresReponse: List<GenreEntity>) {
+                override fun onGenresReceived(genresReponse: List<GenreResponse>) {
                     genreResult.postValue(genresReponse)
                 }
             })
@@ -71,12 +71,12 @@ class MovieRepository private constructor(private val remoteDataSource: RemoteDa
         return genreResult
     }
 
-    override fun getMovieByGenre(idGenre: String): LiveData<List<MovieEntity>> {
-        val movieResult = MutableLiveData<List<MovieEntity>>()
+    override fun getMovieByGenre(idGenre: String): LiveData<List<MovieResponse>> {
+        val movieResult = MutableLiveData<List<MovieResponse>>()
         CoroutineScope(Dispatchers.IO).launch {
             remoteDataSource.getListMovieByGenre(idGenre,
                 object : RemoteDataSource.LoadListMovieByGenre {
-                    override fun onListMovieByGenreReceived(movieResponses: List<MovieEntity>) {
+                    override fun onListMovieByGenreReceived(movieResponses: List<MovieResponse>) {
                         movieResult.postValue(movieResponses)
                     }
                 })

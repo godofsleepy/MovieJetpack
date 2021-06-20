@@ -1,7 +1,7 @@
 package com.rifat.moviejetpack.data.source.remote
 
 import com.rifat.moviejetpack.BuildConfig
-import com.rifat.moviejetpack.data.entities.*
+import com.rifat.moviejetpack.data.source.remote.responses.*
 import com.rifat.moviejetpack.utils.EspressoIdlingResource
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -105,27 +105,27 @@ class RemoteDataSource {
     }
 
     interface LoadListMovieCallback {
-        fun onListMovieReceived(movieResponses: List<MovieEntity>)
+        fun onListMovieReceived(movieResponses: List<MovieResponse>)
     }
 
     interface LoadGenresCallback {
-        fun onGenresReceived(genresReponse: List<GenreEntity>)
+        fun onGenresReceived(genresReponse: List<GenreResponse>)
     }
 
     interface LoadDetailMovieCallback {
-        fun onDetailMovieReceived(detailMovieEntity: DetailMovieEntity)
+        fun onDetailMovieReceived(detailMovieEntity: DetailMovieResponse)
     }
 
     interface LoadListSeriesCallback {
-        fun onListSeriesReceived(seriesResponse: List<SeriesEntity>)
+        fun onListSeriesReceived(seriesResponse: List<SeriesResponse>)
     }
 
     interface LoadDetailSeriesCallback {
-        fun onDetailSeriesReceived(detailMovieEntity: DetailSeriesEntity)
+        fun onDetailSeriesReceived(detailSerieseEntity: DetailSeriesResponse)
     }
 
     interface LoadListMovieByGenre {
-        fun onListMovieByGenreReceived(movieResponses: List<MovieEntity>)
+        fun onListMovieByGenreReceived(movieResponses: List<MovieResponse>)
     }
 
 }
