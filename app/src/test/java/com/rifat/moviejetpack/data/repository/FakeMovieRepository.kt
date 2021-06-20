@@ -54,4 +54,8 @@ class FakeMovieRepository (private val remoteDataSource: RemoteDataSource) :
         return genreResult
     }
 
+    override fun getMovieByGenre(idGenre: String): LiveData<List<MovieResponse>> {
+
+    }
+
 }

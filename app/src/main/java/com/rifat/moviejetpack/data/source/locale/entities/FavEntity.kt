@@ -5,7 +5,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "faventity")
+@Entity(tableName = "fav_entity")
 data class FavEntity(
     @PrimaryKey
     @NonNull
@@ -21,4 +21,6 @@ data class FavEntity(
     var release_date: String,
     @ColumnInfo(name = "vote_average")
     var vote_average: Double,
+    @ColumnInfo(name = "type")
+    var type: String,
 )

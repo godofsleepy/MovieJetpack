@@ -53,4 +53,8 @@ class FakeSeriesRepository(private val remoteDataSource: RemoteDataSource) :
 
         return genreResult
     }
+
+    override fun getListSeriesByGenre(idGenre: String): LiveData<List<SeriesResponse>> {
+        TODO("Not yet implemented")
+    }
 }

@@ -2,6 +2,8 @@ package com.rifat.moviejetpack.data.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.rifat.moviejetpack.data.source.locale.LocaleDataSource
+import com.rifat.moviejetpack.data.source.locale.entities.FavEntity
 import com.rifat.moviejetpack.data.source.remote.RemoteDataSource
 import com.rifat.moviejetpack.data.source.remote.responses.DetailMovieResponse
 import com.rifat.moviejetpack.data.source.remote.responses.GenreResponse
@@ -18,18 +20,28 @@ interface MovieDataSource {
     fun getMovieGenre(): LiveData<List<GenreResponse>>
 
     fun getMovieByGenre(idGenre: String): LiveData<List<MovieResponse>>
+
+    fun getAllFav(): LiveData<List<FavEntity>>
+
+    fun addFav(favEntity: FavEntity)
 }
 
-class MovieRepository private constructor(private val remoteDataSource: RemoteDataSource) :
+class MovieRepository private constructor(
+    private val remoteDataSource: RemoteDataSource,
+    private val localDataSource: LocaleDataSource,
+) :
     MovieDataSource {
 
     companion object {
         @Volatile
         private var instance: MovieRepository? = null
 
-        fun getInstance(remoteData: RemoteDataSource): MovieRepository =
+        fun getInstance(
+            remoteData: RemoteDataSource,
+            localDataSource: LocaleDataSource,
+        ): MovieRepository =
             instance ?: synchronized(this) {
-                MovieRepository(remoteData).apply { instance = this }
+                MovieRepository(remoteData, localDataSource).apply { instance = this }
             }
     }
 
@@ -83,6 +95,14 @@ class MovieRepository private constructor(private val remoteDataSource: RemoteDa
         }
 
         return movieResult
+    }
+
+    override fun getAllFav(): LiveData<List<FavEntity>> {
+        return localDataSource.getAllFav()
+    }
+
+    override fun addFav(favEntity: FavEntity) {
+        return localDataSource.insertFav(favEntity)
     }
 
 }
