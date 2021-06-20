@@ -8,21 +8,24 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.rifat.moviejetpack.R
+import com.rifat.moviejetpack.databinding.FragmentFilmBinding
 import com.rifat.moviejetpack.utils.adapter.ListFilmAdapter
 import com.rifat.moviejetpack.utils.adapter.ListGenreAdapter
 import com.rifat.moviejetpack.utils.viewmodel.ViewModelFactory
-import kotlinx.android.synthetic.main.fragment_film.*
 
 
 class FilmFragment : Fragment() {
+
+    private var _binding: FragmentFilmBinding? = null
+    private val binding get() = _binding as FragmentFilmBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_film, container, false)
+        _binding = FragmentFilmBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -34,30 +37,30 @@ class FilmFragment : Fragment() {
             val genreAdapter = ListGenreAdapter()
 
             viewModel.getMovies().observe(this, { movies ->
-                progressBar.visibility = View.GONE
+                binding.progressBar.visibility = View.GONE
                 filmAdapter.setData(movies)
                 filmAdapter.notifyDataSetChanged()
-                list_movie.visibility = View.VISIBLE
+                binding.listMovie.visibility = View.VISIBLE
             })
 
-            with(list_movie) {
-                list_movie.layoutManager =
+            with(binding.listMovie) {
+                binding.listMovie.layoutManager =
                     StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
-                list_movie.setHasFixedSize(false)
-                list_movie.adapter = filmAdapter
+                binding.listMovie.setHasFixedSize(false)
+                binding.listMovie.adapter = filmAdapter
             }
 
             viewModel.getGenres().observe(this, {genres ->
-                progressBar2.visibility = View.GONE
+                binding.progressBar2.visibility = View.GONE
                 genreAdapter.setData(genres)
                 genreAdapter.notifyDataSetChanged()
             })
 
-            with(listgenre) {
-                listgenre.layoutManager =
+            with(binding.listgenre) {
+                binding.listgenre.layoutManager =
                     LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                listgenre.setHasFixedSize(false)
-                listgenre.adapter = genreAdapter
+                binding.listgenre.setHasFixedSize(false)
+                binding.listgenre.adapter = genreAdapter
             }
 
         }

@@ -2,12 +2,10 @@ package com.rifat.moviejetpack.utils.adapter
 
 import android.graphics.Color
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.rifat.moviejetpack.R
 import com.rifat.moviejetpack.data.entities.GenreEntity
-import kotlinx.android.synthetic.main.item_genre.view.*
+import com.rifat.moviejetpack.databinding.ItemGenreBinding
 import java.util.ArrayList
 
 class ListGenreAdapter : RecyclerView.Adapter<ListGenreAdapter.ViewHolder>() {
@@ -21,20 +19,23 @@ class ListGenreAdapter : RecyclerView.Adapter<ListGenreAdapter.ViewHolder>() {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_genre, parent, false)
-        return ViewHolder(view)
+        val itemGenreBinding =
+            ItemGenreBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(itemGenreBinding)
     }
 
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class ViewHolder(private val binding: ItemGenreBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(text: String, position: Int) {
-            if (position == 0) {
-                with(itemView) {
-                    genrebutton.text = text
-                    genrebutton.setBackgroundColor(Color.parseColor("#be122b"))
-                }
-            } else {
-                with(itemView) {
-                    genrebutton.text = text
+            with(binding){
+                if (position == 0) {
+                    with(itemView) {
+                        genrebutton.text = text
+                        genrebutton.setBackgroundColor(Color.parseColor("#be122b"))
+                    }
+                } else {
+                    with(itemView) {
+                        genrebutton.text = text
+                    }
                 }
             }
         }
