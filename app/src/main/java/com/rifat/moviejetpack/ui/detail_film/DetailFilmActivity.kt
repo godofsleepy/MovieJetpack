@@ -28,7 +28,7 @@ class DetailFilmActivity : AppCompatActivity() {
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
-        val factory = ViewModelFactory.getInstance()
+        val factory = ViewModelFactory.getInstance(this)
         val viewModel = ViewModelProvider(this, factory)[DetailFilmViewModel::class.java]
         val relatedMovieAdapter = RelatedMovieAdapter()
         val extras = intent.extras

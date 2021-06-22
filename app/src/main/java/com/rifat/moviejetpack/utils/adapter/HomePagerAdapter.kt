@@ -27,7 +27,7 @@ class HomePagerAdapter(private val mContext: Context, fm: FragmentManager) : Fra
         when (position) {
             0 -> FilmFragment()
             1 -> SeriesFragment()
-            3 -> MylistFragment()
+            2 -> MylistFragment()
             else -> Fragment()
         }
 

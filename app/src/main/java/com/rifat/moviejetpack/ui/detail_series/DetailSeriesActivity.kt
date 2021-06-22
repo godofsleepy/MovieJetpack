@@ -26,7 +26,7 @@ class DetailSeriesActivity : AppCompatActivity() {
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
-        val factory = ViewModelFactory.getInstance()
+        val factory = ViewModelFactory.getInstance(this)
         val viewModel = ViewModelProvider(this, factory)[DetailSeriesViewModel::class.java]
         val listSeasonAdapter = ListSeasonAdapter()
         val relatedSeriesAdapter = RelatedSeriesAdapter()

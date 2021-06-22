@@ -30,7 +30,7 @@ class SeriesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (activity != null) {
-            val factory = ViewModelFactory.getInstance()
+            val factory = ViewModelFactory.getInstance(requireContext())
             val viewModel = ViewModelProvider(this, factory)[SeriesViewModel::class.java]
             val seriesAdapter = ListSeriesAdapter()
             val genreAdapter = ListGenreAdapter()

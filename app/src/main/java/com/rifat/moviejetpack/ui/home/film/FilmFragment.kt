@@ -31,7 +31,7 @@ class FilmFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (activity != null) {
-            val factory = ViewModelFactory.getInstance()
+            val factory = ViewModelFactory.getInstance(requireContext())
             val viewModel = ViewModelProvider(this, factory)[FilmViewModel::class.java]
             val filmAdapter = ListFilmAdapter()
             val genreAdapter = ListGenreAdapter()
