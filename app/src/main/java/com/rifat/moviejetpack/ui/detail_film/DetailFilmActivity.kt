@@ -80,7 +80,7 @@ class DetailFilmActivity : AppCompatActivity() {
                     binding.button.visibility = View.GONE
                 }
                 binding.buttonAdd.setOnClickListener {
-
+                    viewModel.addToFav(movie)
                 }
             })
 

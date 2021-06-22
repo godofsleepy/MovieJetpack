@@ -1,5 +1,6 @@
 package com.rifat.moviejetpack.data.repository
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.rifat.moviejetpack.data.source.locale.LocaleDataSource
@@ -23,7 +24,7 @@ interface MovieDataSource {
 
     fun getAllFav(): LiveData<List<FavEntity>>
 
-    fun addFav(favEntity: FavEntity)
+    fun addFav(movieResponse: DetailMovieResponse)
 }
 
 class MovieRepository private constructor(
@@ -101,8 +102,20 @@ class MovieRepository private constructor(
         return localDataSource.getAllFav()
     }
 
-    override fun addFav(favEntity: FavEntity) {
-        return localDataSource.insertFav(favEntity)
+    override fun addFav(movieResponse: DetailMovieResponse) {
+        CoroutineScope(Dispatchers.IO).launch {
+            val favEntity  = FavEntity(
+                id = movieResponse.id,
+                title = movieResponse.title,
+                overview = movieResponse.overview,
+                poster = movieResponse.poster_path,
+                release_date = movieResponse.release_date,
+                vote_average = movieResponse.vote_average,
+                type = "movie"
+            )
+            Log.d("test", "Berhasil")
+             localDataSource.insertFav(favEntity)
+        }
     }
 
 }

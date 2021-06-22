@@ -11,4 +11,6 @@ class DetailFilmViewModel(private val movieRepository: MovieRepository) : ViewMo
     fun getDetailFilm(id: Int): LiveData<DetailMovieResponse> = movieRepository.getDetailMovie(id.toString())
 
     fun getRelatedMovie(idGenre: String) : LiveData<List<MovieResponse>> = movieRepository.getMovieByGenre(idGenre)
+
+    fun addToFav(movieResponse: DetailMovieResponse) = movieRepository.addFav(movieResponse)
 }
