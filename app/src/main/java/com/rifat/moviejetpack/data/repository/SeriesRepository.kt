@@ -1,7 +1,10 @@
 package com.rifat.moviejetpack.data.repository
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.rifat.moviejetpack.data.source.locale.LocaleDataSource
+import com.rifat.moviejetpack.data.source.locale.entities.FavEntity
 import com.rifat.moviejetpack.data.source.remote.RemoteDataSource
 import com.rifat.moviejetpack.data.source.remote.responses.DetailSeriesResponse
 import com.rifat.moviejetpack.data.source.remote.responses.GenreResponse
@@ -18,18 +21,20 @@ interface SeriesDataSource {
     fun getSeriesGenre(): LiveData<List<GenreResponse>>
 
     fun getListSeriesByGenre(idGenre: String): LiveData<List<SeriesResponse>>
+
+    fun addFav(detailSeriesResponse: DetailSeriesResponse)
 }
 
-class SeriesRepository private constructor(private val remoteDataSource: RemoteDataSource) :
+class SeriesRepository private constructor(private val remoteDataSource: RemoteDataSource, private val localDataSource: LocaleDataSource,) :
     SeriesDataSource {
 
     companion object {
         @Volatile
         private var instance: SeriesRepository? = null
 
-        fun getInstance(remoteData: RemoteDataSource): SeriesRepository =
+        fun getInstance(remoteData: RemoteDataSource, localDataSource: LocaleDataSource): SeriesRepository =
             instance ?: synchronized(this) {
-                SeriesRepository(remoteData).apply { instance = this }
+                SeriesRepository(remoteData, localDataSource).apply { instance = this }
             }
     }
 
@@ -56,6 +61,22 @@ class SeriesRepository private constructor(private val remoteDataSource: RemoteD
                 })
         }
         return series
+    }
+
+    override fun addFav(detailSeriesResponse: DetailSeriesResponse) {
+        CoroutineScope(Dispatchers.IO).launch {
+            val favEntity  = FavEntity(
+                id = detailSeriesResponse.id,
+                title = detailSeriesResponse.name,
+                overview = detailSeriesResponse.overview,
+                poster = detailSeriesResponse.poster_path,
+                release_date = detailSeriesResponse.first_air_date,
+                vote_average = detailSeriesResponse.vote_average,
+                type = "series"
+            )
+            Log.d("test", "Berhasil")
+            localDataSource.insertFav(favEntity)
+        }
     }
 
     override fun getDetailSeries(id: String): LiveData<DetailSeriesResponse> {

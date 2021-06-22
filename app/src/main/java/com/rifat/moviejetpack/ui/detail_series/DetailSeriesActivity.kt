@@ -91,6 +91,9 @@ class DetailSeriesActivity : AppCompatActivity() {
                 } else {
                     binding.button.visibility = View.GONE
                 }
+                binding.buttonAdd.setOnClickListener {
+                    viewModel.addToFav(series)
+                }
             })
             with(binding.rvSeason){
                 binding.rvSeason.layoutManager =

@@ -32,7 +32,7 @@ class ListFavAdapter(val context: Context) : RecyclerView.Adapter<ListFavAdapter
             with(binding) {
                 textView4.text = favEntity.title
                 textView6.text = favEntity.vote_average.toString()
-                textView6.setCompoundDrawables(ContextCompat.getDrawable(context, R.drawable.ic_baseline_star_24), null, null, null)
+                textView6.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_star_24, 0, 0, 0)
                 txtDesc.text = favEntity.overview
                 textView7.text = favEntity.release_date
                 Glide.with(itemView.context)

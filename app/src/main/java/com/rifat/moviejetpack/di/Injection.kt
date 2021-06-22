@@ -15,9 +15,11 @@ object Injection {
         return MovieRepository.getInstance(remoteRepository, localDataSource)
     }
 
-    fun provideSeriesRepository(): SeriesRepository {
+    fun provideSeriesRepository(context: Context): SeriesRepository {
+        val database = FavDatabase.getInstance(context)
+        val localDataSource = LocaleDataSource.getInstance(database.favDao())
         val remoteRepository = RemoteDataSource.getInstance()
 
-        return SeriesRepository.getInstance(remoteRepository)
+        return SeriesRepository.getInstance(remoteRepository, localDataSource)
     }
 }

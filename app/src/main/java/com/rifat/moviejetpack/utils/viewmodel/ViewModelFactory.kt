@@ -25,7 +25,7 @@ class ViewModelFactory private constructor(
             instance ?: synchronized(this) {
                 instance ?: ViewModelFactory(
                     Injection.provideMovieRepository(context),
-                    Injection.provideSeriesRepository()
+                    Injection.provideSeriesRepository(context)
                 )
             }
     }
