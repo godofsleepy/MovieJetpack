@@ -1,6 +1,5 @@
 package com.rifat.moviejetpack.data.repository
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.rifat.moviejetpack.data.source.locale.LocaleDataSource
@@ -24,7 +23,7 @@ interface MovieDataSource {
 
     fun getAllFav(): LiveData<List<FavEntity>>
 
-    fun addFav(movieResponse: DetailMovieResponse)
+    fun addFav(movieResponse: DetailMovieResponse): LiveData<Map<String, Any>>
 }
 
 class MovieRepository private constructor(
@@ -102,20 +101,27 @@ class MovieRepository private constructor(
         return localDataSource.getAllFav()
     }
 
-    override fun addFav(movieResponse: DetailMovieResponse) {
+    override fun addFav(movieResponse: DetailMovieResponse): LiveData<Map<String, Any>> {
+        val favResult = MutableLiveData<Map<String, Any>>()
         CoroutineScope(Dispatchers.IO).launch {
-            val favEntity  = FavEntity(
-                id = movieResponse.id,
-                title = movieResponse.title,
-                overview = movieResponse.overview,
-                poster = movieResponse.poster_path,
-                release_date = movieResponse.release_date,
-                vote_average = movieResponse.vote_average,
-                type = "movie"
-            )
-            Log.d("test", "Berhasil")
-             localDataSource.insertFav(favEntity)
+            try {
+                val favEntity = FavEntity(
+                    id = movieResponse.id,
+                    title = movieResponse.title,
+                    overview = movieResponse.overview,
+                    poster = movieResponse.poster_path,
+                    release_date = movieResponse.release_date,
+                    vote_average = movieResponse.vote_average,
+                    type = "movie"
+                )
+                localDataSource.insertFav(favEntity)
+                favResult.postValue(mutableMapOf("status" to true, "message" to ""))
+            } catch (e: Exception) {
+                favResult.postValue(mutableMapOf("status" to false, "message" to ""))
+            }
         }
+
+        return favResult
     }
 
 }

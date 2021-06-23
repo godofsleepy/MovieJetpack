@@ -1,16 +1,18 @@
 package com.rifat.moviejetpack.ui.detail_film
 
 import android.content.Intent
+import android.graphics.drawable.AnimatedVectorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isGone
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.rifat.moviejetpack.R
 import com.rifat.moviejetpack.databinding.ActivityDetailFilmBinding
-
 import com.rifat.moviejetpack.utils.adapter.RelatedMovieAdapter
 import com.rifat.moviejetpack.utils.viewmodel.ViewModelFactory
 import java.util.*
@@ -80,7 +82,16 @@ class DetailFilmActivity : AppCompatActivity() {
                     binding.button.visibility = View.GONE
                 }
                 binding.buttonAdd.setOnClickListener {
-                    viewModel.addToFav(movie)
+                    viewModel.addToFav(movie).observe(this, { map ->
+                        if (map["status"] as Boolean) {
+                            Toast.makeText(
+                                applicationContext,
+                                map["message"] as String,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                        add(binding)
+                    })
                 }
             })
 
@@ -92,5 +103,18 @@ class DetailFilmActivity : AppCompatActivity() {
             }
 
         }
+    }
+
+    private fun add(binding: ActivityDetailFilmBinding) {
+        binding.buttonAdd.setIconResource(R.drawable.avd_add_to_delete)
+        val buttonAnimate =
+            binding.buttonAdd.compoundDrawables[0] as AnimatedVectorDrawable
+        buttonAnimate.start()
+    }
+    private fun close(binding: ActivityDetailFilmBinding) {
+        binding.buttonAdd.setIconResource(R.drawable.avd_delete_to_add)
+        val buttonAnimate =
+            binding.buttonAdd.compoundDrawables[0] as AnimatedVectorDrawable
+        buttonAnimate.start()
     }
 }

@@ -15,4 +15,6 @@ interface FavDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertFav(favEntity: FavEntity)
 
+    @Query("SELECT * FROM fav_entity WHERE id = :id")
+    fun getDataById(id: Int): LiveData<FavEntity>
 }
