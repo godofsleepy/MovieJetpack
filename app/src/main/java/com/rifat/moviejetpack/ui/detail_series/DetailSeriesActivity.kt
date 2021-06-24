@@ -1,14 +1,18 @@
 package com.rifat.moviejetpack.ui.detail_series
 
+import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.drawable.AnimatedVectorDrawable
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.core.view.isGone
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.rifat.moviejetpack.R
 import com.rifat.moviejetpack.databinding.ActivityDetailSeriesBinding
 import com.rifat.moviejetpack.utils.adapter.ListSeasonAdapter
 import com.rifat.moviejetpack.utils.adapter.RelatedSeriesAdapter
@@ -20,6 +24,7 @@ class DetailSeriesActivity : AppCompatActivity() {
         const val EXTRA_SERIES = "extra_series"
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivityDetailSeriesBinding.inflate(layoutInflater)
@@ -34,6 +39,15 @@ class DetailSeriesActivity : AppCompatActivity() {
         if (extras != null) {
             val seriesId: Int = extras.getInt(EXTRA_SERIES)
             viewModel.getDetailSeries(seriesId).observe(this, { series ->
+                var isFav = false
+
+                viewModel.checkIsFav("s-${series.id}").observe(this, {
+                    if (it != null) {
+                        isFav = true
+                        add(binding)
+                    }
+                })
+
                 binding.progressBar.visibility = View.GONE
                 binding.txtTitle.text = series.name
                 binding.txtDate.text = series.first_air_date
@@ -92,7 +106,32 @@ class DetailSeriesActivity : AppCompatActivity() {
                     binding.button.visibility = View.GONE
                 }
                 binding.buttonAdd.setOnClickListener {
-                    viewModel.addToFav(series)
+                    if (isFav){
+                        viewModel.deleteById("s-${series.id}").observe(this, { map ->
+                            if (!(map["status"] as Boolean)) {
+                                Toast.makeText(
+                                    applicationContext,
+                                    map["message"] as String,
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            }
+                            close(binding)
+                            isFav = false
+                        })
+                    }
+                    else{
+                        viewModel.addToFav(series).observe(this, { map ->
+                            if (!(map["status"] as Boolean)) {
+                                Toast.makeText(
+                                    applicationContext,
+                                    map["message"] as String,
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            }
+                            add(binding)
+                            isFav = true
+                        })
+                    }
                 }
             })
             with(binding.rvSeason){
@@ -109,5 +148,19 @@ class DetailSeriesActivity : AppCompatActivity() {
             }
 
         }
+    }
+
+    private fun add(binding: ActivityDetailSeriesBinding) {
+        binding.buttonAdd.setIconResource(R.drawable.avd_add_to_delete)
+        val buttonAnimate =
+            binding.buttonAdd.compoundDrawables[0] as AnimatedVectorDrawable
+        buttonAnimate.start()
+    }
+
+    private fun close(binding: ActivityDetailSeriesBinding) {
+        binding.buttonAdd.setIconResource(R.drawable.avd_delete_to_add)
+        val buttonAnimate =
+            binding.buttonAdd.compoundDrawables[0] as AnimatedVectorDrawable
+        buttonAnimate.start()
     }
 }

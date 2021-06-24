@@ -1,6 +1,5 @@
 package com.rifat.moviejetpack.data.repository
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.rifat.moviejetpack.data.source.locale.LocaleDataSource
@@ -22,17 +21,27 @@ interface SeriesDataSource {
 
     fun getListSeriesByGenre(idGenre: String): LiveData<List<SeriesResponse>>
 
-    fun addFav(detailSeriesResponse: DetailSeriesResponse)
+    fun addFav(detailSeriesResponse: DetailSeriesResponse): LiveData<Map<String, Any>>
+
+    fun getFavById(id: String): LiveData<FavEntity>
+
+    fun deleteFavById(id: String): LiveData<Map<String, Any>>
 }
 
-class SeriesRepository private constructor(private val remoteDataSource: RemoteDataSource, private val localDataSource: LocaleDataSource,) :
+class SeriesRepository private constructor(
+    private val remoteDataSource: RemoteDataSource,
+    private val localDataSource: LocaleDataSource,
+) :
     SeriesDataSource {
 
     companion object {
         @Volatile
         private var instance: SeriesRepository? = null
 
-        fun getInstance(remoteData: RemoteDataSource, localDataSource: LocaleDataSource): SeriesRepository =
+        fun getInstance(
+            remoteData: RemoteDataSource,
+            localDataSource: LocaleDataSource
+        ): SeriesRepository =
             instance ?: synchronized(this) {
                 SeriesRepository(remoteData, localDataSource).apply { instance = this }
             }
@@ -63,19 +72,45 @@ class SeriesRepository private constructor(private val remoteDataSource: RemoteD
         return series
     }
 
-    override fun addFav(detailSeriesResponse: DetailSeriesResponse) {
+    override fun addFav(detailSeriesResponse: DetailSeriesResponse): LiveData<Map<String, Any>> {
+        val favResult = MutableLiveData<Map<String, Any>>()
         CoroutineScope(Dispatchers.IO).launch {
-            val favEntity  = FavEntity(
-                id = "s-${detailSeriesResponse.id}",
-                title = detailSeriesResponse.name,
-                overview = detailSeriesResponse.overview,
-                poster = detailSeriesResponse.poster_path,
-                release_date = detailSeriesResponse.first_air_date,
-                vote_average = detailSeriesResponse.vote_average,
+            try {
+                val favEntity = FavEntity(
+                    id = "s-${detailSeriesResponse.id}",
+                    title = detailSeriesResponse.name,
+                    overview = detailSeriesResponse.overview,
+                    poster = detailSeriesResponse.poster_path,
+                    release_date = detailSeriesResponse.first_air_date,
+                    vote_average = detailSeriesResponse.vote_average,
 
-            )
-            localDataSource.insertFav(favEntity)
+                    )
+                localDataSource.insertFav(favEntity)
+                favResult.postValue(mutableMapOf("status" to true, "message" to ""))
+            } catch (e: Exception) {
+                favResult.postValue(mutableMapOf("status" to false, "message" to ""))
+            }
         }
+
+        return favResult
+    }
+
+    override fun getFavById(id: String): LiveData<FavEntity> {
+        return  localDataSource.getFavById(id)
+    }
+
+    override fun deleteFavById(id: String): LiveData<Map<String, Any>> {
+        val favResult = MutableLiveData<Map<String, Any>>()
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                localDataSource.deleteFavById(id)
+                favResult.postValue(mutableMapOf("status" to true, "message" to ""))
+            } catch (e: Exception) {
+                favResult.postValue(mutableMapOf("status" to false, "message" to ""))
+            }
+        }
+
+        return favResult
     }
 
     override fun getDetailSeries(id: String): LiveData<DetailSeriesResponse> {

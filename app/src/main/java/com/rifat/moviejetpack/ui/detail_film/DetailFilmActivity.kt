@@ -101,6 +101,7 @@ class DetailFilmActivity : AppCompatActivity() {
                                 ).show()
                             }
                             close(binding)
+                            isFav = false
                         })
                     }
                     else{
@@ -113,6 +114,7 @@ class DetailFilmActivity : AppCompatActivity() {
                                 ).show()
                             }
                             add(binding)
+                            isFav = true
                         })
                     }
                 }
