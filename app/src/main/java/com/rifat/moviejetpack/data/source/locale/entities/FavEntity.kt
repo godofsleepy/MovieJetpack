@@ -21,4 +21,6 @@ data class FavEntity(
     var release_date: String,
     @ColumnInfo(name = "vote_average")
     var vote_average: Double,
+    @ColumnInfo(name = "detail")
+    var detail: String
 )

@@ -2,6 +2,7 @@ package com.rifat.moviejetpack.data.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.gson.Gson
 import com.rifat.moviejetpack.data.source.locale.LocaleDataSource
 import com.rifat.moviejetpack.data.source.locale.entities.FavEntity
 import com.rifat.moviejetpack.data.source.remote.RemoteDataSource
@@ -83,7 +84,7 @@ class SeriesRepository private constructor(
                     poster = detailSeriesResponse.poster_path,
                     release_date = detailSeriesResponse.first_air_date,
                     vote_average = detailSeriesResponse.vote_average,
-
+                    detail = Gson().toJson(detailSeriesResponse)
                     )
                 localDataSource.insertFav(favEntity)
                 favResult.postValue(mutableMapOf("status" to true, "message" to ""))
