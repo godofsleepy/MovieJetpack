@@ -106,13 +106,12 @@ class MovieRepository private constructor(
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val favEntity = FavEntity(
-                    id = movieResponse.id,
+                    id = "m-${movieResponse.id}",
                     title = movieResponse.title,
                     overview = movieResponse.overview,
                     poster = movieResponse.poster_path,
                     release_date = movieResponse.release_date,
                     vote_average = movieResponse.vote_average,
-                    type = "movie"
                 )
                 localDataSource.insertFav(favEntity)
                 favResult.postValue(mutableMapOf("status" to true, "message" to ""))

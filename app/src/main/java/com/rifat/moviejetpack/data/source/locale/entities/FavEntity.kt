@@ -10,7 +10,7 @@ data class FavEntity(
     @PrimaryKey
     @NonNull
     @ColumnInfo(name = "id")
-    var id: Int,
+    var id: String,
     @ColumnInfo(name = "title")
     var title: String,
     @ColumnInfo(name = "overview")
@@ -21,6 +21,4 @@ data class FavEntity(
     var release_date: String,
     @ColumnInfo(name = "vote_average")
     var vote_average: Double,
-    @ColumnInfo(name = "type")
-    var type: String,
 )

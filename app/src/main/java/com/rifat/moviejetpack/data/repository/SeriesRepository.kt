@@ -66,15 +66,14 @@ class SeriesRepository private constructor(private val remoteDataSource: RemoteD
     override fun addFav(detailSeriesResponse: DetailSeriesResponse) {
         CoroutineScope(Dispatchers.IO).launch {
             val favEntity  = FavEntity(
-                id = detailSeriesResponse.id,
+                id = "s-${detailSeriesResponse.id}",
                 title = detailSeriesResponse.name,
                 overview = detailSeriesResponse.overview,
                 poster = detailSeriesResponse.poster_path,
                 release_date = detailSeriesResponse.first_air_date,
                 vote_average = detailSeriesResponse.vote_average,
-                type = "series"
+
             )
-            Log.d("test", "Berhasil")
             localDataSource.insertFav(favEntity)
         }
     }
