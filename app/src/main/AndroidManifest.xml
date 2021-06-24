@@ -11,7 +11,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MovieJetpack">
-        <activity android:name=".ui.detail_series.DetailSeriesActivity"
+        <activity android:name=".ui.detail_fav_series.DetailFavSeriesActivity"></activity>
+        <activity android:name=".ui.detail_fav_film.DetailFavFilmActivity" />
+        <activity
+            android:name=".ui.detail_series.DetailSeriesActivity"
             android:theme="@style/Theme.MovieJetpack.TransparentTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
