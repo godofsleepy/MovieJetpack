@@ -37,6 +37,15 @@ class DetailFilmActivity : AppCompatActivity() {
         if (extras != null) {
             val movieId: Int = extras.getInt(EXTRA_MOVIES)
             viewModel.getDetailFilm(movieId).observe(this, { movie ->
+                var isFav = false
+
+                viewModel.checkIsFav("m-${movie.id}").observe(this, {
+                    if (it != null) {
+                        isFav = true
+                        add(binding)
+                    }
+                })
+
                 binding.progressBar.visibility = View.GONE
                 binding.toolbarLayout.title = "\"${movie.tagline}\""
                 binding.txtTitle.text = movie.title
@@ -82,16 +91,30 @@ class DetailFilmActivity : AppCompatActivity() {
                     binding.button.visibility = View.GONE
                 }
                 binding.buttonAdd.setOnClickListener {
-                    viewModel.addToFav(movie).observe(this, { map ->
-                        if (map["status"] as Boolean) {
-                            Toast.makeText(
-                                applicationContext,
-                                map["message"] as String,
-                                Toast.LENGTH_LONG
-                            ).show()
-                        }
-                        add(binding)
-                    })
+                    if (isFav){
+                        viewModel.deleteById("m-${movie.id}").observe(this, { map ->
+                            if (!(map["status"] as Boolean)) {
+                                Toast.makeText(
+                                    applicationContext,
+                                    map["message"] as String,
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            }
+                            close(binding)
+                        })
+                    }
+                    else{
+                        viewModel.addToFav(movie).observe(this, { map ->
+                            if (!(map["status"] as Boolean)) {
+                                Toast.makeText(
+                                    applicationContext,
+                                    map["message"] as String,
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            }
+                            add(binding)
+                        })
+                    }
                 }
             })
 
@@ -111,6 +134,7 @@ class DetailFilmActivity : AppCompatActivity() {
             binding.buttonAdd.compoundDrawables[0] as AnimatedVectorDrawable
         buttonAnimate.start()
     }
+
     private fun close(binding: ActivityDetailFilmBinding) {
         binding.buttonAdd.setIconResource(R.drawable.avd_delete_to_add)
         val buttonAnimate =

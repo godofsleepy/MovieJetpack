@@ -17,4 +17,8 @@ class LocaleDataSource private constructor(private val mFavDao: FavDao) {
     fun getAllFav(): LiveData<List<FavEntity>> = mFavDao.getFav()
 
     fun insertFav(favEntity: FavEntity) = mFavDao.insertFav(favEntity)
+
+    fun getFavById(id: String) = mFavDao.getDataById(id)
+
+    fun deleteFavById(id: String) = mFavDao.deleteById(id)
 }

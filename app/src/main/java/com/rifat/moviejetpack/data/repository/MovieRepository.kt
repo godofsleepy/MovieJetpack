@@ -24,6 +24,10 @@ interface MovieDataSource {
     fun getAllFav(): LiveData<List<FavEntity>>
 
     fun addFav(movieResponse: DetailMovieResponse): LiveData<Map<String, Any>>
+
+    fun getFavById(id: String): LiveData<FavEntity>
+
+    fun deleteFavById(id: String): LiveData<Map<String, Any>>
 }
 
 class MovieRepository private constructor(
@@ -114,6 +118,24 @@ class MovieRepository private constructor(
                     vote_average = movieResponse.vote_average,
                 )
                 localDataSource.insertFav(favEntity)
+                favResult.postValue(mutableMapOf("status" to true, "message" to ""))
+            } catch (e: Exception) {
+                favResult.postValue(mutableMapOf("status" to false, "message" to ""))
+            }
+        }
+
+        return favResult
+    }
+
+    override fun getFavById(id: String): LiveData<FavEntity> {
+        return localDataSource.getFavById(id)
+    }
+
+    override fun deleteFavById(id: String): LiveData<Map<String, Any>> {
+        val favResult = MutableLiveData<Map<String, Any>>()
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                localDataSource.deleteFavById(id)
                 favResult.postValue(mutableMapOf("status" to true, "message" to ""))
             } catch (e: Exception) {
                 favResult.postValue(mutableMapOf("status" to false, "message" to ""))
