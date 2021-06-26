@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.rifat.moviejetpack.data.repository.MovieRepository
 import com.rifat.moviejetpack.data.repository.SeriesRepository
 import com.rifat.moviejetpack.di.Injection
-import com.rifat.moviejetpack.ui.detail_fav_film.DetailFavFilmViewModel
 import com.rifat.moviejetpack.ui.detail_film.DetailFilmViewModel
 import com.rifat.moviejetpack.ui.detail_series.DetailSeriesViewModel
 import com.rifat.moviejetpack.ui.home.film.FilmViewModel
@@ -49,12 +48,7 @@ class ViewModelFactory private constructor(
             modelClass.isAssignableFrom(MylistViewModel::class.java) -> {
                 MylistViewModel(mMovierepository) as T
             }
-            modelClass.isAssignableFrom(DetailFavFilmViewModel::class.java) -> {
-                DetailFavFilmViewModel(mMovierepository) as T
-            }
-            modelClass.isAssignableFrom(DetailSeriesViewModel::class.java) -> {
-                DetailSeriesViewModel(mSeriesRepository) as T
-            }
+
             else -> throw Throwable("Unknown ViewModel class: " + modelClass.name)
         }
     }

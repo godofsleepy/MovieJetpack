@@ -1,8 +1,10 @@
 package com.rifat.moviejetpack.data.repository
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.rifat.moviejetpack.data.source.locale.LocaleDataSource
 import com.rifat.moviejetpack.data.source.locale.entities.FavEntity
 import com.rifat.moviejetpack.data.source.remote.RemoteDataSource
@@ -66,11 +68,23 @@ class MovieRepository private constructor(
     override fun getDetailMovie(id: String): LiveData<DetailMovieResponse> {
         val detailMovieResult = MutableLiveData<DetailMovieResponse>()
         CoroutineScope(Dispatchers.IO).launch {
-            remoteDataSource.getDetailMovie(id, object : RemoteDataSource.LoadDetailMovieCallback {
-                override fun onDetailMovieReceived(detailMovieEntity: DetailMovieResponse) {
-                    detailMovieResult.postValue(detailMovieEntity)
-                }
-            })
+            Log.d("id movie", "$id")
+            val data = localDataSource.getFavById("m-$id").value
+            if (data?.detail == null) {
+                remoteDataSource.getDetailMovie(
+                    id,
+                    object : RemoteDataSource.LoadDetailMovieCallback {
+                        override fun onDetailMovieReceived(detailMovieEntity: DetailMovieResponse) {
+                            detailMovieResult.postValue(detailMovieEntity)
+                        }
+                    })
+            } else {
+                val gson = Gson()
+                val type = object : TypeToken<DetailMovieResponse>() {}.type
+
+                val detail: DetailMovieResponse = gson.fromJson(data.detail, type)
+                detailMovieResult.postValue(detail)
+            }
         }
         return detailMovieResult
     }

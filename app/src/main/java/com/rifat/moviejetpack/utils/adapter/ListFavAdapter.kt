@@ -2,6 +2,9 @@ package com.rifat.moviejetpack.utils.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
+import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -10,6 +13,8 @@ import com.bumptech.glide.Glide
 import com.rifat.moviejetpack.R
 import com.rifat.moviejetpack.data.source.locale.entities.FavEntity
 import com.rifat.moviejetpack.databinding.ItemSeasonBinding
+import com.rifat.moviejetpack.ui.detail_film.DetailFilmActivity
+import com.rifat.moviejetpack.ui.detail_series.DetailSeriesActivity
 import java.util.ArrayList
 
 class ListFavAdapter(val context: Context) : RecyclerView.Adapter<ListFavAdapter.ViewHolder>() {
@@ -30,14 +35,42 @@ class ListFavAdapter(val context: Context) : RecyclerView.Adapter<ListFavAdapter
         @SuppressLint("SetTextI18n")
         fun bind(favEntity: FavEntity) {
             with(binding) {
+                val id = favEntity.id.split("-").toTypedArray()
                 textView4.text = favEntity.title
                 textView6.text = favEntity.vote_average.toString()
-                textView6.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_star_24, 0, 0, 0)
+                textView6.setCompoundDrawablesWithIntrinsicBounds(
+                    R.drawable.ic_baseline_star_24,
+                    0,
+                    0,
+                    0
+                )
                 txtDesc.text = favEntity.overview
-                textView7.text = favEntity.release_date
+                if (id[0] == "m") {
+                    textView7.text = "Movie"
+                } else {
+                    textView7.text = "Series"
+                }
+                textView7.setTextColor(Color.parseColor("#be122b"))
+
+
                 Glide.with(itemView.context)
                     .load("https://image.tmdb.org/t/p/w500" + favEntity.poster)
                     .into(seasonPoster)
+                itemView.setOnClickListener {
+
+
+                    if (id[0] == "m") {
+                        val intent = Intent(itemView.context, DetailFilmActivity::class.java)
+                        intent.putExtra(DetailFilmActivity.EXTRA_ID, id[1].toInt())
+                        intent.putExtra(DetailFilmActivity.EXTRA_FROMFAV, true)
+                        itemView.context.startActivity(intent)
+                    } else {
+                        val intent = Intent(itemView.context, DetailFilmActivity::class.java)
+                        intent.putExtra(DetailSeriesActivity.EXTRA_SERIES, id[1].toInt())
+                        itemView.context.startActivity(intent)
+
+                    }
+                }
             }
 
         }
