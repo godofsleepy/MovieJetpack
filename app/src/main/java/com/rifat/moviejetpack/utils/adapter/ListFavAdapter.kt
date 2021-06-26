@@ -7,7 +7,6 @@ import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.rifat.moviejetpack.R
@@ -65,8 +64,10 @@ class ListFavAdapter(val context: Context) : RecyclerView.Adapter<ListFavAdapter
                         intent.putExtra(DetailFilmActivity.EXTRA_FROMFAV, true)
                         itemView.context.startActivity(intent)
                     } else {
-                        val intent = Intent(itemView.context, DetailFilmActivity::class.java)
-                        intent.putExtra(DetailSeriesActivity.EXTRA_SERIES, id[1].toInt())
+                        Log.d("EYY", "in here ${id[1].toInt()}")
+                        val intent = Intent(itemView.context, DetailSeriesActivity::class.java)
+                        intent.putExtra(DetailSeriesActivity.EXTRA_ID, id[1].toInt())
+                        intent.putExtra(DetailSeriesActivity.EXTRA_FROMFAV, true)
                         itemView.context.startActivity(intent)
 
                     }

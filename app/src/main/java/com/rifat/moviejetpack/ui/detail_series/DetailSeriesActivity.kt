@@ -6,6 +6,7 @@ import android.graphics.drawable.AnimatedVectorDrawable
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.core.view.isGone
@@ -13,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.rifat.moviejetpack.R
+import com.rifat.moviejetpack.data.source.remote.responses.DetailSeriesResponse
 import com.rifat.moviejetpack.databinding.ActivityDetailSeriesBinding
 import com.rifat.moviejetpack.utils.adapter.ListSeasonAdapter
 import com.rifat.moviejetpack.utils.adapter.RelatedSeriesAdapter
@@ -21,7 +23,8 @@ import com.rifat.moviejetpack.utils.viewmodel.ViewModelFactory
 class DetailSeriesActivity : AppCompatActivity() {
 
     companion object {
-        const val EXTRA_SERIES = "extra_series"
+        const val EXTRA_ID = "extra_id"
+        const val EXTRA_FROMFAV = "extra_from_fav"
     }
 
     @SuppressLint("SetTextI18n")
@@ -37,7 +40,9 @@ class DetailSeriesActivity : AppCompatActivity() {
         val relatedSeriesAdapter = RelatedSeriesAdapter()
         val extras = intent.extras
         if (extras != null) {
-            val seriesId: Int = extras.getInt(EXTRA_SERIES)
+            val seriesId: Int = extras.getInt(EXTRA_ID)
+            Log.d("tag", "id : $seriesId")
+            val fromFav: Boolean = extras.getBoolean(EXTRA_FROMFAV)
             viewModel.getDetailSeries(seriesId).observe(this, { series ->
                 var isFav = false
 
@@ -47,26 +52,13 @@ class DetailSeriesActivity : AppCompatActivity() {
                         add(binding)
                     }
                 })
+                bindView(binding, series)
 
-                binding.progressBar.visibility = View.GONE
-                binding.txtTitle.text = series.name
-                binding.txtDate.text = series.first_air_date
-                binding.toolbarLayout.title = "\"${series.tagline}\""
-                binding.txtDesc.text = series.overview
-                binding.txtLanguage.text = series.original_language.uppercase()
-                binding.txtRate.text = series.vote_average.toString()
-                binding.textView2.isGone = !series.adult
-                binding.txtTotalepisode.text = "${series.episode} Episode"
-                binding.txtTotalseason.text = "${series.season} Season"
-                if (series.productionCompany.isNotEmpty()) {
-                    Glide.with(applicationContext)
-                        .load("https://image.tmdb.org/t/p/w500" + series.productionCompany[0].logo)
-                        .into(binding.profileImage)
-                }
-                if (series.seasons.isNotEmpty()){
+                if (series.seasons.isNotEmpty()) {
                     listSeasonAdapter.setData(series.seasons)
                     listSeasonAdapter.notifyDataSetChanged()
                 }
+
                 if (series.genres.isNotEmpty()) {
                     if (series.genres.size == 1) {
                         binding.txtGenres.text = series.genres[0].name
@@ -74,28 +66,23 @@ class DetailSeriesActivity : AppCompatActivity() {
                         val genres = "${series.genres[0].name}, ${series.genres[1].name}"
                         binding.txtGenres.text = genres
                     }
-                    viewModel.getRelatedSeries(series.genres[0].id.toString()).observe(this, {
+                    if (!fromFav){
+                        viewModel.getRelatedSeries(series.genres[0].id.toString()).observe(this, {
+                            binding.progress.visibility = View.GONE
+                            relatedSeriesAdapter.setAdapterSeries(series.id.toString())
+                            relatedSeriesAdapter.setData(it)
+                            relatedSeriesAdapter.notifyDataSetChanged()
+                        })
+                    }
+                    else {
+                        binding.textview8.visibility = View.GONE
                         binding.progress.visibility = View.GONE
-                        relatedSeriesAdapter.setAdapterSeries(series.id.toString())
-                        relatedSeriesAdapter.setData(it)
-                        relatedSeriesAdapter.notifyDataSetChanged()
-                    })
+                    }
                 } else {
-                    binding.textView2.visibility = View.GONE
+                    binding.textview8.visibility = View.GONE
                 }
-                if (series.networksList.isNotEmpty()){
-                    Glide.with(applicationContext)
-                        .load("https://image.tmdb.org/t/p/w500" + series.networksList[0].logo)
-                        .into(binding.networkImage)
-                }else {
-                    binding.cardView4.visibility = View.GONE
-                }
-                Glide.with(applicationContext)
-                    .load("https://image.tmdb.org/t/p/w500" + series.backdrop_path)
-                    .into(binding.detailImage)
-                Glide.with(applicationContext)
-                    .load("https://image.tmdb.org/t/p/w500" + series.poster_path)
-                    .into(binding.imgPoster)
+
+
                 if (series.homepage.isNotEmpty()) {
                     binding.button.setOnClickListener {
                         val uriUrl: Uri = Uri.parse(series.homepage)
@@ -106,7 +93,7 @@ class DetailSeriesActivity : AppCompatActivity() {
                     binding.button.visibility = View.GONE
                 }
                 binding.buttonAdd.setOnClickListener {
-                    if (isFav){
+                    if (isFav) {
                         viewModel.deleteById("s-${series.id}").observe(this, { map ->
                             if (!(map["status"] as Boolean)) {
                                 Toast.makeText(
@@ -118,8 +105,7 @@ class DetailSeriesActivity : AppCompatActivity() {
                             close(binding)
                             isFav = false
                         })
-                    }
-                    else{
+                    } else {
                         viewModel.addToFav(series).observe(this, { map ->
                             if (!(map["status"] as Boolean)) {
                                 Toast.makeText(
@@ -134,7 +120,7 @@ class DetailSeriesActivity : AppCompatActivity() {
                     }
                 }
             })
-            with(binding.rvSeason){
+            with(binding.rvSeason) {
                 binding.rvSeason.layoutManager =
                     LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
                 binding.rvSeason.setHasFixedSize(false)
@@ -147,6 +133,45 @@ class DetailSeriesActivity : AppCompatActivity() {
                 binding.listRelated.adapter = relatedSeriesAdapter
             }
 
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun bindView(
+        binding: ActivityDetailSeriesBinding,
+        series: DetailSeriesResponse
+    ) {
+        binding.progressBar.visibility = View.GONE
+        binding.txtTitle.text = series.name
+        binding.txtDate.text = series.first_air_date
+        binding.toolbarLayout.title = "\"${series.tagline}\""
+        binding.txtDesc.text = series.overview
+        binding.txtLanguage.text = series.original_language.uppercase()
+        binding.txtRate.text = series.vote_average.toString()
+        binding.textView2.isGone = !series.adult
+        binding.txtTotalepisode.text = "${series.episode} Episode"
+        binding.txtTotalseason.text = "${series.season} Season"
+
+        Glide.with(applicationContext)
+            .load("https://image.tmdb.org/t/p/w500" + series.backdrop_path)
+            .into(binding.detailImage)
+
+        Glide.with(applicationContext)
+            .load("https://image.tmdb.org/t/p/w500" + series.poster_path)
+            .into(binding.imgPoster)
+
+        if (series.networksList.isNotEmpty()) {
+            Glide.with(applicationContext)
+                .load("https://image.tmdb.org/t/p/w500" + series.networksList[0].logo)
+                .into(binding.networkImage)
+        } else {
+            binding.cardView4.visibility = View.GONE
+        }
+
+        if (series.productionCompany.isNotEmpty()) {
+            Glide.with(applicationContext)
+                .load("https://image.tmdb.org/t/p/w500" + series.productionCompany[0].logo)
+                .into(binding.profileImage)
         }
     }
 

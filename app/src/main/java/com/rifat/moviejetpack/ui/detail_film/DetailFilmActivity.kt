@@ -69,7 +69,7 @@ class DetailFilmActivity : AppCompatActivity() {
                        binding.progress.visibility = View.GONE
                    }
                 } else {
-                    binding.textView2.visibility = View.GONE
+                    binding.textview3.visibility = View.GONE
                 }
 
                 if (movie.homepage.isNotEmpty()) {

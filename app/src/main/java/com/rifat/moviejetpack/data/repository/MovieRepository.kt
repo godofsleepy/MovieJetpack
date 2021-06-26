@@ -68,7 +68,6 @@ class MovieRepository private constructor(
     override fun getDetailMovie(id: String): LiveData<DetailMovieResponse> {
         val detailMovieResult = MutableLiveData<DetailMovieResponse>()
         CoroutineScope(Dispatchers.IO).launch {
-            Log.d("id movie", "$id")
             val data = localDataSource.getFavById("m-$id").value
             if (data?.detail == null) {
                 remoteDataSource.getDetailMovie(

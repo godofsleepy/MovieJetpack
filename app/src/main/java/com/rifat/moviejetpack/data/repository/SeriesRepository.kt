@@ -3,6 +3,7 @@ package com.rifat.moviejetpack.data.repository
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.rifat.moviejetpack.data.source.locale.LocaleDataSource
 import com.rifat.moviejetpack.data.source.locale.entities.FavEntity
 import com.rifat.moviejetpack.data.source.remote.RemoteDataSource
@@ -117,12 +118,21 @@ class SeriesRepository private constructor(
     override fun getDetailSeries(id: String): LiveData<DetailSeriesResponse> {
         val series = MutableLiveData<DetailSeriesResponse>()
         CoroutineScope(Dispatchers.IO).launch {
-            remoteDataSource.getDetailSeries(id,
-                object : RemoteDataSource.LoadDetailSeriesCallback {
-                    override fun onDetailSeriesReceived(detailSeriesEntity: DetailSeriesResponse) {
-                        series.postValue(detailSeriesEntity)
-                    }
-                })
+            val data = localDataSource.getFavById("s-$id").value
+            if (data?.detail == null){
+                remoteDataSource.getDetailSeries(id,
+                    object : RemoteDataSource.LoadDetailSeriesCallback {
+                        override fun onDetailSeriesReceived(detailSeriesEntity: DetailSeriesResponse) {
+                            series.postValue(detailSeriesEntity)
+                        }
+                    })
+            }else {
+                val gson = Gson()
+                val type = object : TypeToken<DetailSeriesResponse>() {}.type
+
+                val detail: DetailSeriesResponse = gson.fromJson(data.detail, type)
+                series.postValue(detail)
+            }
         }
         return series
     }
