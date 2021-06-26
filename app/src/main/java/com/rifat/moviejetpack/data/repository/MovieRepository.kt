@@ -3,6 +3,8 @@ package com.rifat.moviejetpack.data.repository
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.paging.LivePagedListBuilder
+import androidx.paging.PagedList
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.rifat.moviejetpack.data.source.locale.LocaleDataSource
@@ -24,7 +26,7 @@ interface MovieDataSource {
 
     fun getMovieByGenre(idGenre: String): LiveData<List<MovieResponse>>
 
-    fun getAllFav(): LiveData<List<FavEntity>>
+    fun getAllFav(): LiveData<PagedList<FavEntity>>
 
     fun addFav(movieResponse: DetailMovieResponse): LiveData<Map<String, Any>>
 
@@ -115,8 +117,13 @@ class MovieRepository private constructor(
         return movieResult
     }
 
-    override fun getAllFav(): LiveData<List<FavEntity>> {
-        return localDataSource.getAllFav()
+    override fun getAllFav():  LiveData<PagedList<FavEntity>>{
+        val config = PagedList.Config.Builder()
+            .setEnablePlaceholders(false)
+            .setInitialLoadSizeHint(4)
+            .setPageSize(4)
+            .build()
+        return LivePagedListBuilder(localDataSource.getAllFav(), config).build()
     }
 
     override fun addFav(movieResponse: DetailMovieResponse): LiveData<Map<String, Any>> {

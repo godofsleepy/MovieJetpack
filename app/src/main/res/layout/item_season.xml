@@ -65,6 +65,7 @@
         android:layout_marginTop="16dp"
         android:id="@+id/txt_desc"
         android:text="@string/text"
+        app:layout_constrainedWidth="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/cardView5"

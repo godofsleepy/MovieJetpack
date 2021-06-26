@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.rifat.moviejetpack.R
 import com.rifat.moviejetpack.databinding.FragmentMylistBinding
 import com.rifat.moviejetpack.utils.adapter.ListFavAdapter
 import com.rifat.moviejetpack.utils.viewmodel.ViewModelFactory
@@ -20,27 +19,26 @@ class MylistFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentMylistBinding.inflate(inflater, container, false)
         return binding.root
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (activity != null){
+        if (activity != null) {
             val factory = ViewModelFactory.getInstance(requireContext())
             val viewModel = ViewModelProvider(this, factory)[MylistViewModel::class.java]
-            val listFavAdapter = ListFavAdapter(requireContext())
+            val listFavAdapter = ListFavAdapter()
 
             viewModel.getFav().observe(this, { data ->
-            if (data.isNotEmpty())
-                binding.txtList.visibility = View.INVISIBLE
-                listFavAdapter.setData(data)
+                if (data.isNotEmpty())
+                    binding.txtList.visibility = View.INVISIBLE
+                listFavAdapter.submitList(data)
                 listFavAdapter.notifyDataSetChanged()
             })
 
-            with(binding.listSeason){
+            with(binding.listSeason) {
                 binding.listSeason.layoutManager =
                     LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
                 binding.listSeason.setHasFixedSize(false)

@@ -1,13 +1,14 @@
 package com.rifat.moviejetpack.data.source.locale.room
 
 import androidx.lifecycle.LiveData
+import androidx.paging.DataSource
 import androidx.room.*
 import com.rifat.moviejetpack.data.source.locale.entities.FavEntity
 
 @Dao
 interface FavDao {
     @Query("SELECT * FROM fav_entity")
-    fun getFav(): LiveData<List<FavEntity>>
+    fun getFav(): DataSource.Factory<Int, FavEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertFav(favEntity: FavEntity)

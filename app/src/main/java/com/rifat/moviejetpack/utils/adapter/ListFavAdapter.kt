@@ -1,12 +1,13 @@
 package com.rifat.moviejetpack.utils.adapter
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagedListAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.rifat.moviejetpack.R
@@ -14,20 +15,22 @@ import com.rifat.moviejetpack.data.source.locale.entities.FavEntity
 import com.rifat.moviejetpack.databinding.ItemSeasonBinding
 import com.rifat.moviejetpack.ui.detail_film.DetailFilmActivity
 import com.rifat.moviejetpack.ui.detail_series.DetailSeriesActivity
-import java.util.ArrayList
 
-class ListFavAdapter(val context: Context) : RecyclerView.Adapter<ListFavAdapter.ViewHolder>() {
+class ListFavAdapter : PagedListAdapter<FavEntity, ListFavAdapter.ViewHolder>(DIFF_CALLBACK) {
 
-    private val data = ArrayList<FavEntity>()
+    companion object {
+        private val DIFF_CALLBACK: DiffUtil.ItemCallback<FavEntity> =
+            object : DiffUtil.ItemCallback<FavEntity>() {
+                override fun areItemsTheSame(oldItem: FavEntity, newItem: FavEntity): Boolean {
+                    return oldItem.id == newItem.id
+                }
 
-    fun setData(fav: List<FavEntity>?) {
-        if (fav == null) return
-        this.data.clear()
-        this.data.addAll(fav)
+                override fun areContentsTheSame(oldItem: FavEntity, newItem: FavEntity): Boolean {
+                    return oldItem == newItem
+                }
 
-        this.notifyDataSetChanged()
+            }
     }
-
 
     inner class ViewHolder(private val binding: ItemSeasonBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -44,6 +47,7 @@ class ListFavAdapter(val context: Context) : RecyclerView.Adapter<ListFavAdapter
                     0
                 )
                 txtDesc.text = favEntity.overview
+                txtDesc.maxLines = 12
                 if (id[0] == "m") {
                     textView7.text = "Movie"
                 } else {
@@ -89,9 +93,7 @@ class ListFavAdapter(val context: Context) : RecyclerView.Adapter<ListFavAdapter
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val fav = data[position]
-        holder.bind(fav)
+        holder.bind(getItem(position) as FavEntity)
     }
 
-    override fun getItemCount(): Int = data.size
 }
