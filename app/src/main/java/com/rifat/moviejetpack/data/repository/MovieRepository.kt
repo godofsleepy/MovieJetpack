@@ -1,6 +1,5 @@
 package com.rifat.moviejetpack.data.repository
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.LivePagedListBuilder
@@ -142,7 +141,7 @@ class MovieRepository private constructor(
                 localDataSource.insertFav(favEntity)
                 favResult.postValue(mutableMapOf("status" to true, "message" to ""))
             } catch (e: Exception) {
-                favResult.postValue(mutableMapOf("status" to false, "message" to ""))
+                favResult.postValue(mutableMapOf("status" to false, "message" to e.toString()))
             }
         }
 
@@ -160,7 +159,7 @@ class MovieRepository private constructor(
                 localDataSource.deleteFavById(id)
                 favResult.postValue(mutableMapOf("status" to true, "message" to ""))
             } catch (e: Exception) {
-                favResult.postValue(mutableMapOf("status" to false, "message" to ""))
+                favResult.postValue(mutableMapOf("status" to false, "message" to e.toString()))
             }
         }
 

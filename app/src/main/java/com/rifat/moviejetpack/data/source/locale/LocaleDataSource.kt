@@ -1,6 +1,5 @@
 package com.rifat.moviejetpack.data.source.locale
 
-import androidx.lifecycle.LiveData
 import androidx.paging.DataSource
 import com.rifat.moviejetpack.data.source.locale.entities.FavEntity
 import com.rifat.moviejetpack.data.source.locale.room.FavDao

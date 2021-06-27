@@ -90,7 +90,7 @@ class SeriesRepository private constructor(
                 localDataSource.insertFav(favEntity)
                 favResult.postValue(mutableMapOf("status" to true, "message" to ""))
             } catch (e: Exception) {
-                favResult.postValue(mutableMapOf("status" to false, "message" to ""))
+                favResult.postValue(mutableMapOf("status" to false, "message" to e.toString()))
             }
         }
 
@@ -108,7 +108,7 @@ class SeriesRepository private constructor(
                 localDataSource.deleteFavById(id)
                 favResult.postValue(mutableMapOf("status" to true, "message" to ""))
             } catch (e: Exception) {
-                favResult.postValue(mutableMapOf("status" to false, "message" to ""))
+                favResult.postValue(mutableMapOf("status" to false, "message" to e.toString()))
             }
         }
 
@@ -122,8 +122,8 @@ class SeriesRepository private constructor(
             if (data?.detail == null){
                 remoteDataSource.getDetailSeries(id,
                     object : RemoteDataSource.LoadDetailSeriesCallback {
-                        override fun onDetailSeriesReceived(detailSeriesEntity: DetailSeriesResponse) {
-                            series.postValue(detailSeriesEntity)
+                        override fun onDetailSeriesReceived(detailSerieseEntity: DetailSeriesResponse) {
+                            series.postValue(detailSerieseEntity)
                         }
                     })
             }else {
