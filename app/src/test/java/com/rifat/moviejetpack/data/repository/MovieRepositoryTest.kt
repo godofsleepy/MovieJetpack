@@ -168,5 +168,34 @@ class MovieRepositoryTest {
         assertEquals(result["status"], true)
     }
 
+    @Test
+    fun getFavById() {
+        val movie = MutableLiveData<FavEntity>()
+        movie.value = movieFavEntity
+
+        runBlocking {
+            `when`(locale.getFavById("m-508943")).thenReturn(movie)
+        }
+        val result = LiveDataTestUtil.getValue(movieRepository.getFavById("m-508943"))
+        runBlocking {
+            verify(locale).getFavById(eq("m-508943"))
+        }
+        assertNotNull(result)
+        assertEquals(movieFavEntity, result)
+    }
+
+    @Test
+    fun deleteFavById(){
+        val movie = MutableLiveData<FavEntity>()
+        movie.value = movieFavEntity
+
+        doNothing().`when`(locale).deleteFavById(eq("m-508943"))
+        val result = LiveDataTestUtil.getValue(movieRepository.deleteFavById("m-508943"))
+        runBlocking {
+            verify(locale).deleteFavById(eq("m-508943"))
+        }
+        assertNotNull(result)
+        assertEquals(result["status"], true)
+    }
     
 }
