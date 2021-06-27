@@ -57,4 +57,16 @@ class FakeSeriesRepository(private val remoteDataSource: RemoteDataSource) :
     override fun getListSeriesByGenre(idGenre: String): LiveData<List<SeriesResponse>> {
         TODO("Not yet implemented")
     }
+
+    override fun addFav(detailSeriesResponse: DetailSeriesResponse): LiveData<Map<String, Any>> {
+        TODO("Not yet implemented")
+    }
+
+    override fun getFavById(id: String): LiveData<FavEntity> {
+        TODO("Not yet implemented")
+    }
+
+    override fun deleteFavById(id: String): LiveData<Map<String, Any>> {
+        TODO("Not yet implemented")
+    }
 }

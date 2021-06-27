@@ -9,6 +9,7 @@ import com.nhaarman.mockitokotlin2.doAnswer
 import com.nhaarman.mockitokotlin2.eq
 import com.nhaarman.mockitokotlin2.verify
 import com.rifat.moviejetpack.data.FakeMovieRepository
+import com.rifat.moviejetpack.data.source.locale.LocaleDataSource
 import com.rifat.moviejetpack.data.source.remote.RemoteDataSource
 import com.rifat.moviejetpack.data.source.remote.responses.DetailMovieResponse
 import com.rifat.moviejetpack.data.source.remote.responses.GenreResponse
@@ -27,7 +28,8 @@ class MovieRepositoryTest {
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
     private val remote = Mockito.mock(RemoteDataSource::class.java)
-    private val movieRepository = FakeMovieRepository(remote)
+    private val locale = Mockito.mock(LocaleDataSource::class.java)
+    private val movieRepository = FakeMovieRepository(remote, locale)
     private lateinit var movieResponse: String
     private lateinit var detailMovieResponse: String
     private lateinit var genreResponse: String
