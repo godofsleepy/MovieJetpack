@@ -14,11 +14,15 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://github.com/RafiIzzatulRizquFaris/healthish)
+[![Product Name Screen Shot][product-screenshot]](https://github.com/godofsleepy/MovieJetpack)
 
 
 ### Built With
 
-* Android Kotlin
+* Android native using Kotlin
+* ✅ Android Jetpack
+* ✅ Retrofit & Room
+* ✅ MVVM, Dedepedency Injection, Repository Pattern
+* ✅ Unit Test & Instrumen Test
 
 [product-screenshot]: design.png
