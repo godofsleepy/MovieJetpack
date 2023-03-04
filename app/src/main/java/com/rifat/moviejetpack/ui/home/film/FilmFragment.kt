@@ -36,12 +36,12 @@ class FilmFragment : Fragment() {
             val filmAdapter = ListFilmAdapter()
             val genreAdapter = ListGenreAdapter()
 
-            viewModel.getMovies().observe(this, { movies ->
+            viewModel.getMovies().observe(this) { movies ->
                 binding.progressBar.visibility = View.GONE
                 filmAdapter.setData(movies)
                 filmAdapter.notifyDataSetChanged()
                 binding.listMovie.visibility = View.VISIBLE
-            })
+            }
 
             with(binding.listMovie) {
                 binding.listMovie.layoutManager =

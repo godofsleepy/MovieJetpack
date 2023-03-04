@@ -11,9 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MovieJetpack">
-        <activity android:name=".ui.detail_fav_series.DetailFavSeriesActivity"></activity>
-        <activity android:name=".ui.detail_fav_film.DetailFavFilmActivity" />
         <activity
+            android:exported="false"
             android:name=".ui.detail_series.DetailSeriesActivity"
             android:theme="@style/Theme.MovieJetpack.TransparentTheme">
             <meta-data
@@ -21,6 +20,7 @@
                 android:value=".ui.home.HomeActivity" />
         </activity>
         <activity
+            android:exported="false"
             android:name=".ui.detail_film.DetailFilmActivity"
             android:parentActivityName=".ui.home.HomeActivity"
             android:theme="@style/Theme.MovieJetpack.TransparentTheme">
@@ -28,7 +28,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.home.HomeActivity" />
         </activity>
-        <activity android:name=".ui.home.HomeActivity">
+        <activity
+            android:exported="true"
+            android:name=".ui.home.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
